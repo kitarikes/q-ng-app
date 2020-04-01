@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <title>q-zaka</title>
+  {% block style %}
+  {% endblock %}
+</head>
+<body>
+  <script>
+      $(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
+  </script>
+  <div class="navbar-fixed">
+  <nav>
+    <div class="nav-wrapper">
+      <a href="/" class="brand-logo"><img src={{url_for('static', filename = 'images/logo.png')}} alt="" width='70', height="70"></a>
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/sign_up">新規登録</a></li>
+        <li><a href="/sign_in">ログイン</a></li>
+        <li><a href="/mypage">Mypage</a></li>
+        {%if s.username%}
+        <li><a href="/sign_out">{{s.username}}からログアウト</a></li>
+        {%endif%}
+      </ul>
+    </div>
+  </nav>
+  </div>
+  <ul class="sidenav" id="mobile-demo">
+    {%if s.username%}
+    <li><h5 style="margin-left: 20px;">{{s.username}}さんこんにちは！</h5></li>
+    {% else %}
+    <li><h4  class="red-text text-lighten-2" style="margin-left: 20px;">九大坂道愛好会</h4></li>
+    {%endif%}
+    <li><a href="/sign_up">新規登録</a></li>
+    <li><a href="/sign_in">ログイン</a></li>
+    <li><a href="/mypage">Mypage</a></li>
+    <li><a href="/sign_out">ログアウト</a></li>
+  </ul>
+  {% block content %}
+  {% endblock %}
+
+
+</body>
+</html>

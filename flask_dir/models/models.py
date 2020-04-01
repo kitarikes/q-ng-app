@@ -5,8 +5,8 @@ class User(db.Model):
   __tablename__ = 'users'
 
   id = db.Column(db.Integer, primary_key=True)
-  username = db.Column(db.String(20))
-  password = db.Column(db.String(30))
+  username = db.Column(db.String(20), unique=True)
+  password = db.Column(db.String(255))
   nickname = db.Column(db.String(30))
   sex = db.Column(db.Integer)
   grade = db.Column(db.Integer)
@@ -17,6 +17,7 @@ class User(db.Model):
   created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
   updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
   osis = db.relationship('Osi', backref='user', lazy='dynamic', cascade='delete')
+
 
 class Osi(db.Model):
   __tablename__ = 'osis'

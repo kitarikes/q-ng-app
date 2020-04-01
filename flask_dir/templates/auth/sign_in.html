@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+  <p>サインインしてください</p>
+    <form class="col s12" action="/sign_in", method="POST">
+      <div class="row">
+        <div class="input-field col s8 l5">
+          <input id="username" type="text" class="validate" name='username'>
+          <label for="username">ユーザー名（必須）</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s8 l5">
+          <input id="password" type="password" class="validate" name='password'>
+          <label for="password">パスワード（必須）</label>
+        </div>
+      </div>
+      <button class="btn waves-effect waves-light" type="submit">ログイン
+      </button>
+    </form>
+</div>
+{% endblock %}

@@ -40,7 +40,9 @@ def sing_up():
     data_['twitter_id'] = data['twitter_id']
     data_['comment'] = data['comment']
     data_['osi_group'] = int(data['osi_group'])
-    data_['password'] = bcrypt.hashpw(data['password'].encode('utf-8'), bcrypt.gensalt())
+    pwhash = bcrypt.hashpw(data['password'].encode('utf-8'), bcrypt.gensalt())
+    data_['password'] = pwhash.decode('utf8')
+
     already_names = db.session.query(User).filter(User.username == data_['username']).all()
     if len(already_names) == 0:
       db.session.add(User(**data_))

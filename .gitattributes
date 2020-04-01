@@ -1,0 +1,3 @@
+*.html linguist-documentation
+*.mako linguist-documentation
+*.js linguist-documentation

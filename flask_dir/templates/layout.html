@@ -43,7 +43,9 @@
     <li><a href="/sign_up">新規登録</a></li>
     <li><a href="/sign_in">ログイン</a></li>
     <li><a href="/mypage">Mypage</a></li>
+    {%if s.username%}
     <li><a href="/sign_out">ログアウト</a></li>
+    {%endif%}
   </ul>
   {% block content %}
   {% endblock %}

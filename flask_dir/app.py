@@ -42,8 +42,6 @@ def sing_up():
     data_['osi_group'] = int(data['osi_group'])
     data_['password'] = bcrypt.hashpw(data['password'].encode('utf-8'), bcrypt.gensalt())
     already_names = db.session.query(User).filter(User.username == data_['username']).all()
-    db.session.add(User(**data_))
-    db.session.commit()
     if len(already_names) == 0:
       db.session.add(User(**data_))
       db.session.commit()
@@ -64,7 +62,7 @@ def sign_in():
     # print(dbnames[0].password, input_password)
     if len(dbnames) != 0:
       hashed = dbnames[0].password
-      if bcrypt.checkpw(hashed.encode('utf-8'), input_password.encode('utf-8')):
+      if bcrypt.checkpw(input_password.encode('utf-8'),hashed.encode('utf-8')):
         flg = True
 
     if flg:

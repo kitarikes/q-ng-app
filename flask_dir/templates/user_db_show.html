@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% block content %}
+<form action="/admin/kitarikes/user-db", method="POST">
+<div class="table-responsive">
+  　　<table class="table table-condensed" >
+    　　<table class="table table-hover" style="table-layout:fixed;width:100%;">
+      <thead>
+          <tr>
+            <td>
+              <button type="submit" value="submit" class="waves-effect waves-light btn red lighten-1">delete</button>
+              <a href="#" class='select_all' style="padding: 5px;font-size: 12px;">全選択</a>
+            </td>
+            {%for k in data[0].keys()%}
+              <td>{{k}}</td>
+            {%endfor%}
+          </tr>
+      </thead>
+      <tbody>
+        {%for d in data%}
+          <tr id='buttun'>
+            <td class="checkbox" style="word-wrap:break-word;">
+              <label for={{d.id}}>
+                <input class='cbgroup' type="checkbox" value={{d.id}} name='id' id={{d.id}}/>
+                <span></span>
+              </label>
+            </td>
+            {%for k,v in d.items()%}
+              <td style="word-wrap:break-word;">{{v}}</td>
+            {%endfor%}
+          </tr>
+        {%endfor%}
+      </tbody>
+  </table>
+  　　</table>
+  </div>
+</form>
+<script>
+// trタグに選択範囲付与
+$(document).ready(function() {
+    $('tr').click(function(event) {
+　　// チェックボックスがチェックされたら無視
+        if (event.target.type !== 'checkbox') {
+            $(':checkbox', this).trigger('click');
+        }
+    });
+});
+
+// shiftキーで範囲選択
+$(function(){
+		var checked_last = null;
+		$('.cbgroup').on('click', function(event){
+			if (event.shiftKey && checked_last) {
+				var $targets = $('.cbgroup');
+				var p1 = $targets.index(checked_last)
+				var p2 = $targets.index(this)
+				for (var i = Math.min(p1, p2); i <= Math.max(p1, p2); ++i) {
+					$targets.get(i).checked = checked_last.checked;
+				}
+			} else {
+				checked_last = this;
+			}
+		});
+  });
+
+// 全選択
+$(function() {
+ // aタグを選択する
+  $('a.select_all').click(function(){
+ 
+  // prop()でチェックの状態を取得
+  var prop = $('input').prop('checked');
+  // もしpropがチェック状態だったら
+  if (prop) {
+    // propでチェックと出力
+    $('input').trigger('click');
+  } else {
+    // テキストをリセット
+    $('input').trigger('click');
+    }
+  });
+});
+</script>
+{% endblock %}

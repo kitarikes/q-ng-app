@@ -113,5 +113,27 @@ def mypage(u_id):
   else:
     return 'pass'
 
+# db管理
+@app.route('/admin/kitarikes/user-db', methods=['GET', 'POST'])
+def delete():
+  if request.method == 'POST':
+    results = request.form.getlist('id')
+    for x in results:
+      db.session.query(User).filter(User.id == int(x)).delete()
+      db.session.commit()
+    return redirect('/admin/kitarikes/user-db')
+  else:
+      users = db.session.query(User).all()
+      dict_ = []
+      for user in users:
+        d = user.__dict__
+        del d['_sa_instance_state']
+        del d['password']
+        dict_.append(d)
+      try:
+        return render_template('user_db_show.html', data=dict_, s=session)
+      except:
+        return redirect('/sign_up')
+
 
 

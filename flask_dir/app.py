@@ -141,6 +141,59 @@ def mypage_edit(u_id):
   else:
     return "error: not enable to access your account!!"
 
+# 検索機能
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+  if 'login' in session:
+    if session['login']:
+      if request.method == 'GET':
+        return render_template('search/search.html', s=session)
+      else:
+        data = request.form
+        data = data.to_dict(flat=True)
+        if data['osi_name'] == '':
+          del data['osi_name']
+        q = db.session.query(User)
+        if 'grade' in data:
+          q = q.filter(User.grade == int(data['grade']))
+        if 'department' in data:
+          q = q.filter(User.department == data['department'])
+        if 'osi_group' in data:
+          q = q.filter(User.osi_group == int(data['osi_group']))
+        searched_users = q.all()
+        if 'osi_name' in data:
+          name = str(data['osi_name']).replace(' ', '')
+          name = str(name).replace('　', '')
+          q_ = db.session.query(Osi).filter(Osi.osi_name == name).all()
+          ids = {d.user_id for d in q_}
+          all_ids = {d.id for d in q}
+          n_ids = list(ids & all_ids)
+          del searched_users
+          searched_users = []
+          for id_ in n_ids:
+            searched_users.append(db.session.query(User).get(int(id_)))
+        data = []
+        for u in searched_users:
+          u = u.__dict__
+          osi1 = db.session.query(Osi).filter(Osi.user_id==int(u['id']), Osi.osi_grade==1).first()
+          if osi1 != None:
+            u['osi1'] = osi1.osi_name
+          else:
+            u['osi1'] = "設定していません"
+          del u['_sa_instance_state']
+          del u['password']
+          data.append(u)
+
+        #print(data)
+
+        return render_template('search/result.html', s=session, data=data, g_dict=group_dict)
+
+    else:
+      return redirect('/sign_in')
+  else:
+    return redirect('/sign_in')
+
+
 # db管理
 @app.route('/admin/kitarikes/user-db', methods=['GET', 'POST'])
 def delete():

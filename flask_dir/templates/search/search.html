@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% block content %}
+<script>
+  $(document).ready(function(){
+    $('select').formSelect();
+  });
+</script>
+<div class="container">
+  <p>オタク検索</p>
+<div class="row">
+  <form class="col s12" action="/search", method="POST">
+    <div class="row">
+    <div class="input-field col s8 l5">
+      <select name='grade'>
+        <option value="" disabled selected>選択してください</option>
+        <option value="1">学部１年</option>
+        <option value="2">学部２年</option>
+        <option value="3">学部３年</option>
+        <option value="4">学部４年</option>
+        <option value="0">その他</option>
+      </select>
+      <label>学年（任意）</label>
+    </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s8 l5">
+        <select name='department'>
+          <option value="" disabled selected>選択してください</option>
+          <option value="共創学部">共創学部</option>
+          <option value="文学部">文学部</option>
+          <option value="教育学部">教育学部</option>
+          <option value="法学部">法学部</option>
+          <option value="経済学部">経済学部</option>
+          <option value="理学部">理学部</option>
+          <option value="医学部">医学部</option>
+          <option value="歯学部">歯学部</option>
+          <option value="薬学部">薬学部</option>
+          <option value="工学部">工学部</option>
+          <option value="芸術工学部">芸術工学部</option>
+          <option value="農学部">農学部</option>
+          <option value="その他">その他</option>
+        </select>
+        <label>学部（任意）</label>
+      </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s8 l5">
+          <select name='osi_group'>
+            <option value="" disabled selected>選択してください</option>
+            <option value="1">乃木坂46</option>
+            <option value="2">欅坂46</option>
+            <option value="3">日向坂46</option>
+          </select>
+          <label>推しグループ（任意）</label>
+        </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s8 l5">
+            <input id="osi_name" type="text" class="validate" name='osi_name' value="" placeholder="齋藤飛鳥">
+            <label for="osi_name">推しメン（任意）</label>
+          </div>
+        </div>
+      <button class="btn waves-effect waves-light" type="submit">検索する
+      </button>
+  </form>
+</div>
+</div>
+
+{% endblock %}

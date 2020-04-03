@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block style%}
+<style>
+  body{
+    background-color: #e2eff5;
+  }
+  </style>
+{% endblock%}
+{% block content %}
+<p style="margin-left: 20px;font-size: 28px;">検索結果 <span style="font-size: 20px;color: gray;">{{data|length}}件</span>
+</p>
+<div class="row" style="margin:30px;">
+  {% for d in data %}
+  <div class="col s12 m4 l3">
+    <div class="card purple darken-3" style="color: #d4cce9;">
+      <div class="card-content white-grey-text">
+        <div style="font-size: 18px;">
+          <p>名前: {{d.nickname}}</p>
+          <p>学部: {{d.department}}</p>
+          <p>学年: {{d.grade}}年</p>
+          <p>推しグループ: {{g_dict[d.osi_group]}}</p>
+          <p>神推し: {{d.osi1}}</p>
+        </div>
+        <div class="card-action deep-purple darken-2" style="margin-top: 20px;">
+          <a href="#">detail</a>
+          <a href="#">message</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {%endfor%}
+</div>
+{% endblock %}

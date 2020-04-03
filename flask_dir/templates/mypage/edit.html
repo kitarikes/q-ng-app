@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block content %}
+<script>
+  $(document).ready(function(){
+    $('select').formSelect();
+  });
+</script>
+<p>推しメンを追加する</p>
+<div class="row">
+  <form class="col s12" action="/mypage/{{s.user_id}}/edit", method="POST">
+    <div class="row">
+      <div class="input-field col s8 l5">
+        <select name='group'>
+          <option value="" disabled selected>選択してください</option>
+          <option value="1">乃木坂46</option>
+          <option value="2">欅坂46</option>
+          <option value="3">日向坂46</option>
+        </select>
+        <label>グループ（必須）</label>
+      </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s8 l5">
+          <input id="osi_name" type="text" class="validate" name='osi_name' placeholder="白石麻衣">
+          <label for="osi_name">メンバー名（必須）</label>
+        </div>
+      </div>
+    <div class="row">
+    <div class="input-field col s8 l5">
+      <select name='osi_grade'>
+        <option value="" disabled selected>選択してください</option>
+        <option value="1">１推し</option>
+        <option value="2">２推し</option>
+        <option value="3">３推し</option>
+      </select>
+      <label>何推し？（必須）</label>
+    </div>
+    </div>
+      <button class="btn waves-effect waves-light" type="submit">追加する
+      </button>
+  </form>
+</div>
+{% endblock %}

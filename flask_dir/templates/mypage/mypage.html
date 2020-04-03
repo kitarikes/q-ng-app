@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row" style="margin: 10px;">
+  <div class="col s5 l3">
+    <a href="#">プロフィールを編集する（未実装）</a>
+    {% for k,v in data.items()%}
+    <li>{{k}}: {{v}}</li>
+    {% endfor %}
+  </div>
+  <div class="col s5 l3">
+      <a href="/mypage/{{data.id}}/edit">推しメンを設定する</a><br>
+      <a href="#">メンバー画像 未実装</a>
+      {% for o in osi %}
+      <h5>{{o.osi_grade}}推し</h5>
+      <li>{{o.osi_name}}</li>
+      <li>{{g_dic[o.group]}}</li>
+      {%endfor%}
+  </div>
+</div>
+{% endblock %}

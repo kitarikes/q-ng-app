@@ -2,25 +2,59 @@
 {% block style%}
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 <style>
-  body{
+  body {
     background-color: #e2eff5;
   }
-  .collection .collection-item{
+
+  .collection .collection-item {
     background-color: #e1bee7;
   }
-
-  input:not([type]):disabled, input:not([type])[readonly="readonly"], input[type=text]:not(.browser-default):disabled, input[type=text]:not(.browser-default)[readonly="readonly"], input[type=password]:not(.browser-default):disabled, input[type=password]:not(.browser-default)[readonly="readonly"], input[type=email]:not(.browser-default):disabled, input[type=email]:not(.browser-default)[readonly="readonly"], input[type=url]:not(.browser-default):disabled, input[type=url]:not(.browser-default)[readonly="readonly"], input[type=time]:not(.browser-default):disabled, input[type=time]:not(.browser-default)[readonly="readonly"], input[type=date]:not(.browser-default):disabled, input[type=date]:not(.browser-default)[readonly="readonly"], input[type=datetime]:not(.browser-default):disabled, input[type=datetime]:not(.browser-default)[readonly="readonly"], input[type=datetime-local]:not(.browser-default):disabled, input[type=datetime-local]:not(.browser-default)[readonly="readonly"], input[type=tel]:not(.browser-default):disabled, input[type=tel]:not(.browser-default)[readonly="readonly"], input[type=number]:not(.browser-default):disabled, input[type=number]:not(.browser-default)[readonly="readonly"], input[type=search]:not(.browser-default):disabled, input[type=search]:not(.browser-default)[readonly="readonly"], textarea.materialize-textarea:disabled, textarea.materialize-textarea[readonly="readonly"]{
+  @media (min-width: 992px){
+  input:not([type]):disabled,
+  input:not([type])[readonly="readonly"],
+  input[type=text]:not(.browser-default):disabled,
+  input[type=text]:not(.browser-default)[readonly="readonly"],
+  input[type=password]:not(.browser-default):disabled,
+  input[type=password]:not(.browser-default)[readonly="readonly"],
+  input[type=email]:not(.browser-default):disabled,
+  input[type=email]:not(.browser-default)[readonly="readonly"],
+  input[type=url]:not(.browser-default):disabled,
+  input[type=url]:not(.browser-default)[readonly="readonly"],
+  input[type=time]:not(.browser-default):disabled,
+  input[type=time]:not(.browser-default)[readonly="readonly"],
+  input[type=date]:not(.browser-default):disabled,
+  input[type=date]:not(.browser-default)[readonly="readonly"],
+  input[type=datetime]:not(.browser-default):disabled,
+  input[type=datetime]:not(.browser-default)[readonly="readonly"],
+  input[type=datetime-local]:not(.browser-default):disabled,
+  input[type=datetime-local]:not(.browser-default)[readonly="readonly"],
+  input[type=tel]:not(.browser-default):disabled,
+  input[type=tel]:not(.browser-default)[readonly="readonly"],
+  input[type=number]:not(.browser-default):disabled,
+  input[type=number]:not(.browser-default)[readonly="readonly"],
+  input[type=search]:not(.browser-default):disabled,
+  input[type=search]:not(.browser-default)[readonly="readonly"],
+  textarea.materialize-textarea:disabled,
+  textarea.materialize-textarea[readonly="readonly"] {
     color: black;
-    border-bottom:1.5px solid #4db6ac;
-}
-</style>  
+    border-bottom: 1.5px solid #4db6ac;
+  }
+  }
+</style>
 {% endblock%}
 {% block content %}
 <div class="row" style="margin: 10px;">
-  <div class="col s12 l5" style="margin-top: -30px;"><p style="font-size: 32px;"><i class="fas fa-crown prefix" style="color:#afb42b;" ><span style="color: black;"> 神推し</span><span style="font-size: 12px;color: gray;">ここに１推しを表示する（未実装）</span></i></p><div style="max-width: 80%;margin:0 auto;"><img src="https://img.nogizaka46.com/www/member/img/yamashitamizuki_prof.jpg" alt="mizu" ></div></div>
+  <div class="col s12 l5" style="margin-top: -30px;">
+    <p style="font-size: 32px;"><i class="fas fa-crown prefix" style="color:#afb42b;"><span style="color: black;">
+          神推し</span><span style="font-size: 12px;color: gray;">ここに１推しを表示する（未実装）</span></i></p>
+    <div style="max-width: 80%;margin:0 auto;"><img
+        src="https://img.nogizaka46.com/www/member/img/yamashitamizuki_prof.jpg" alt="mizu"></div>
+  </div>
   <div class="col s12 l6">
     <ul class="collection" style="background-color: #ba68c8;">
-      <li class="collection-header center" style="border-bottom-style: solid;border-bottom-color: #e0e0e0;"><h4 style="font-weight: bold;"><i class="far fa-address-card prefix"></i> Profile</h4></li>
+      <li class="collection-header center" style="border-bottom-style: solid;border-bottom-color: #e0e0e0;">
+        <h4 style="font-weight: bold;"><i class="far fa-address-card prefix"></i> Profile</h4>
+      </li>
       <li class="collection-item col l6 s12">
         <div class="input-field">
           <i class="far fa-user-circle prefix"></i>
@@ -84,13 +118,13 @@
     </ul>
   </div>
   <div class="col s5 l3">
-      <a href="/mypage/{{data.id}}/edit">推しメンを設定する</a><br>
-      <a href="#">メンバー画像 未実装</a>
-      {% for o in osi %}
-      <h5>{{o.osi_grade}}推し</h5>
-      <li>{{o.osi_name}}</li>
-      <li>{{g_dic[o.group]}}</li>
-      {%endfor%}
+    <a href="/mypage/{{data.id}}/edit">推しメンを設定する</a><br>
+    <a href="#">メンバー画像 未実装</a>
+    {% for o in osi %}
+    <h5>{{o.osi_grade}}推し</h5>
+    <li>{{o.osi_name}}</li>
+    <li>{{g_dic[o.group]}}</li>
+    {%endfor%}
   </div>
 </div>
 {% endblock %}

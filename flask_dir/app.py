@@ -20,7 +20,8 @@ app = create_app()
 app.secret_key = os.environ.get("SECRET_KEY") or 'aaa'
 db = SQLAlchemy(app)
 group_dict = {1: '乃木坂46', 2: '欅坂46', 3: '日向坂46'}
-
+user_dict = {'username':'ユーザー名','nickname':'名前', 'grade':'学年', 'osi_group':'推しグループ','comment':'自己紹介', 'department':'学部', 'sex':'性別', 'adr':'居住地', 'twitter_id': 'twitter'}
+sex_dict = {1: '男', 2:'女'}
 @app.route('/')
 def home():
   return render_template('home.html', s=session)
@@ -38,7 +39,7 @@ def sing_up():
     data_['sex'] = int(data['sex'])
     data_['grade'] = int(data['grade'])
     data_['department'] = data['department']
-    data_['twitter_id'] = data['twitter_id']
+    data_['twitter_id'] = str(data['twitter_id']).replace('@', '')
     data_['comment'] = data['comment']
     data_['osi_group'] = int(data['osi_group'])
     data_['adr'] = data['adr']
@@ -109,8 +110,7 @@ def mypage(u_id):
 
         osi_li = db.session.query(Osi).filter(Osi.user_id == u_id).all()
         osi_li = [osi.__dict__ for osi in osi_li]
-        # print(user_info)
-        return render_template('mypage/mypage.html', data=user_info, osi=osi_li, s=session, g_dic=group_dict)
+        return render_template('mypage/mypage.html', data=user_info, osi=osi_li, s=session, g_dic=group_dict, u_dic=user_dict, s_dic=sex_dict)
       else:
         return redirect('/sign_in')
     else:

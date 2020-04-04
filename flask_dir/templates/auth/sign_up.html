@@ -11,7 +11,7 @@
   <form class="col s12" action="/sign_up", method="POST">
     <div class="row" style="margin-top: 20px;">
       <div class="input-field col s8 l5">
-        <input id="username" type="text" class="validate" name='username'>
+        <input id="username" type="text" class="validate" name='username' required>
         <label for="username">ユーザー名（必須）</label>
       </div>
     </div>
@@ -23,13 +23,13 @@
     </div>
     <div class="row">
       <div class="input-field col s8 l5">
-        <input id="nickname" type="text" class="validate" name='nickname'>
+        <input id="nickname" type="text" class="validate" name='nickname' required>
         <label for="nickname">表示する名前（必須）</label>
       </div>
     </div>
     <div class="row">
     <div class="input-field col s8 l5">
-      <select name='sex'>
+      <select name='sex' required>
         <option value="" disabled selected>選択してください</option>
         <option value="1">男性</option>
         <option value="2">女性</option>
@@ -39,7 +39,7 @@
     </div>
     <div class="row">
     <div class="input-field col s8 l5">
-      <select name='grade'>
+      <select name='grade' required>
         <option value="" disabled selected>選択してください</option>
         <option value="1">学部１年</option>
         <option value="2">学部２年</option>
@@ -52,7 +52,7 @@
     </div>
     <div class="row">
       <div class="input-field col s8 l5">
-        <select name='department'>
+        <select name='department' required>
           <option value="" disabled selected>選択してください</option>
           <option value="共創学部">共創学部</option>
           <option value="文学部">文学部</option>
@@ -73,7 +73,13 @@
       </div>
       <div class="row">
         <div class="input-field col s8 l5">
-          <select name='osi_group'>
+          <input id="adr" type="text" class="validate" name='adr' placeholder="支障が無い範囲でお答え下さい">
+          <label for="adr">居住地（任意）</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s8 l5">
+          <select name='osi_group' required>
             <option value="" disabled selected>選択してください</option>
             <option value="1">乃木坂46</option>
             <option value="2">欅坂46</option>

@@ -41,6 +41,7 @@ def sing_up():
     data_['twitter_id'] = data['twitter_id']
     data_['comment'] = data['comment']
     data_['osi_group'] = int(data['osi_group'])
+    data_['adr'] = data['adr']
     pwhash = bcrypt.hashpw(data['password'].encode('utf-8'), bcrypt.gensalt())
     data_['password'] = pwhash.decode('utf8')
 

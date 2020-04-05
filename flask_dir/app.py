@@ -186,12 +186,8 @@ def get_messages(r_id):
         r_q = db.session.query(Room).filter(Room.id==r_id).one()
 
         ms = r_q.messages
-        print(ms.all())
+        #print(ms.all())
         ms_data = [[m.send_user_id, m.message] for m in ms.all()]
-
-        ###
-        ### あとで過去のやりとりデータ取得を実装
-        ###
 
         # 相手の情報取得
         if r_q.user1_id == session['user_id']:
@@ -231,7 +227,7 @@ def message_li():
     if session['login']:
       my_id = session['user_id']
       rooms = db.session.query(Room).filter(or_(Room.user1_id==my_id, Room.user2_id==my_id)).all()
-      print(rooms)
+      # print(rooms)
       r_data = []
       for room in rooms:
         if room.user1_id == my_id:
@@ -244,7 +240,6 @@ def message_li():
         r_data.append([room, o_name, d[0]])
       
       r_data = sorted(r_data, key=lambda x: x[2])
-      print(r_data)
 
       return render_template('message/list.html', r_data=r_data, s=session)
     else:

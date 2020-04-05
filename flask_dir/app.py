@@ -22,6 +22,7 @@ db = SQLAlchemy(app)
 group_dict = {1: '乃木坂46', 2: '欅坂46', 3: '日向坂46'}
 user_dict = {'username':'ユーザー名','nickname':'名前', 'grade':'学年', 'osi_group':'推しグループ','comment':'自己紹介', 'department':'学部', 'sex':'性別', 'adr':'居住地', 'twitter_id': 'twitter'}
 sex_dict = {1: '男', 2:'女'}
+
 @app.route('/')
 def home():
   return render_template('home.html', s=session)
@@ -142,6 +143,87 @@ def mypage_edit(u_id):
   else:
     return "error: not enable to access your account!!"
 
+# Message機能
+@app.route('/messages/mkroom/<u_id>', methods=['GET'])
+def message(u_id):
+  if 'login' in session:
+    if session['login']:
+      my_id = session['user_id']
+      o_id = int(u_id)
+
+      data = {}
+      if my_id == o_id:
+        return "this is your account!! cannot send message!!"
+
+      data['user1_id'] = my_id
+      data['user2_id'] = o_id
+
+      # 既に該当するroomがないか確認
+      q_flg1 = db.session.query(Room).filter(Room.user1_id==my_id, Room.user2_id==o_id).all()
+      q_flg2 = db.session.query(Room).filter(Room.user1_id==o_id, Room.user2_id==my_id).all()
+      if q_flg1 == [] and q_flg2 == [] : # 無い場合のみdbに追加
+        db.session.add(Room(**data))
+        db.session.commit()
+      q_ = db.session.query(Room)
+      
+      # 既にroomがある方を取得
+      q = q_.filter(Room.user1_id == my_id, Room.user2_id == o_id).all() or q_.filter(Room.user1_id == o_id, Room.user2_id == my_id).all()
+
+      q = q[0]
+
+      return redirect('/messages/{}'.format(q.id))
+    return redirect('/sign_in')
+  return redirect('/sign_in')
+
+@app.route('/messages/<r_id>', methods=['GET', 'POST'])
+def get_messages(r_id):
+  if 'login' in session:
+    if session['login']:
+      if request.method == 'GET':
+        # room情報取得
+        r_id = int(r_id)
+        r_q = db.session.query(Room).filter(Room.id==r_id).one()
+
+        ms = r_q.messages
+        print(ms.all())
+        ms_data = [[m.send_user_id, m.message] for m in ms.all()]
+
+        ###
+        ### あとで過去のやりとりデータ取得を実装
+        ###
+
+        # 相手の情報取得
+        if r_q.user1_id == session['user_id']:
+          o_id = r_q.user2_id
+        else:
+          o_id = r_q.user1_id
+        o_q = db.session.query(User).filter(User.id==o_id).one()
+        return render_template('message/send.html', s=session, o_data=o_q, r_id=r_id, m_d=ms_data)
+      else: # POSTのとき
+        r_id = int(r_id)
+        r_q = db.session.query(Room).filter(Room.id==r_id).one()
+
+        if session['user_id'] != r_q.user1_id and session['user_id'] != r_q.user2_id :
+          return "you cannot access this account!!"
+        m = request.form['message']
+        
+        data = {}
+        data_ = {}
+
+        data['send_user_id'] = session['user_id']
+        data['message'] = m
+        data['room_id'] = r_id
+
+        data_['send_user_id'] = r_q.user2_id
+        data_['message'] = m
+
+        db.session.add(Message(**data))
+        db.session.commit()
+        
+        return redirect('/messages/{}'.format(r_id))
+    return redirect('/sign_in')
+  return redirect('sign_in')
+
 # 検索機能
 @app.route('/search', methods=['GET', 'POST'])
 def search():
@@ -195,6 +277,7 @@ def search():
     return redirect('/sign_in')
 
 
+"""
 # db管理
 @app.route('/admin/kitarikes/user-db', methods=['GET', 'POST'])
 def delete():
@@ -216,6 +299,6 @@ def delete():
         return render_template('user_db_show.html', data=dict_, s=session)
       except:
         return redirect('/sign_up')
-
+"""
 
 

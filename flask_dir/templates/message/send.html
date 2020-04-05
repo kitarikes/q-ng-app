@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+<form action="/messages/{{r_id}}" , method="POST">
+  <div class="row" style="margin: 20px;">
+    <div class="col s12 l12">
+      <span>送信先: {{o_data.nickname}}さん</span>
+    </div>
+    <div class="input-field col s12 l12">
+      {% for m in m_d %}
+      {% if m[0] == o_data.id %}
+      <li>{{o_data.nickname}}さん: {{m[1]}}</li>
+      {% else %}
+      <li>自分: {{m[1]}}</li>
+      {%endif%}
+      {%endfor%}
+    </div>
+    <div class="input-field col s12 l3">
+      <input id="message" type="text" class="validate" name="message">
+      <label class="active" for="message">Message</label>
+    </div>
+    <div class="col l12">
+      <button class="btn waves-effect waves-light" type="submit">送信
+        <i class="material-icons right">send</i>
+      </button>
+    </div>
+  </div>
+</form>
+{% endblock %}

@@ -46,5 +46,6 @@ class Message(db.Model):
   room_id = db.Column(db.Integer, db.ForeignKey("rooms.id"), nullable=False)
   send_user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
   message = db.Column(db.String(600), nullable=False)
+  confirm_flg = db.Column(db.Integer, default=0)
   created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
 

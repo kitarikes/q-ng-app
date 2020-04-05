@@ -56,14 +56,15 @@
       <h4 style="margin-left: 20px;"><a class="red-text text-lighten-2" href="/">九大坂道愛好会</a></h4>
     </li>
     {%endif%}
-    <li><a href="/search"><i class="material-icons" style="margin-right: 10px;margin-left: -10px;">search</i>オタクを検索</a></li>
     {%if not s.username%}
     <li><a href="/sign_up">新規登録</a></li>
     <li><a href="/sign_in">ログイン</a></li>
     {% endif%}
-    <li><a href="/mypage">Mypage</a></li>
     {%if s.username%}
-    <li><a href="/sign_out">ログアウト</a></li>
+    <li><a href="/search"><i class="material-icons left">search</i>オタクを検索</a></li>
+    <li><a href="/mypage">Mypage<i class="material-icons left">person</i></a></li>
+    <li><a href="/messages"><i class="material-icons left">textsms</i>Message</a></li>
+    <li><a href="/sign_out">{{s.username}}からログアウト</a></li>
     {%endif%}
   </ul>
   {% block content %}

@@ -38,7 +38,7 @@ class Room(db.Model):
   user1_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
   user2_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
   messages = db.relationship('Message', backref='room', lazy='dynamic', cascade='delete')
-  created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(JST))
+  created_at = db.Column(db.DateTime, nullable=False, default=datetime.now + datetime.timedelta(hours=10))
 
 
 class Message(db.Model):
@@ -49,5 +49,5 @@ class Message(db.Model):
   send_user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
   message = db.Column(db.String(600), nullable=False)
   confirm_flg = db.Column(db.Integer, default=0)
-  created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(JST))
+  created_at = db.Column(db.DateTime, nullable=False, default=datetime.now + datetime.timedelta(hours=9))
 

@@ -16,7 +16,7 @@ class User(db.Model):
   comment = db.Column(db.String(140))
   osi_group = db.Column(db.Integer)
   adr = db.Column(db.String(50))
-  created_at = db.Column(db.DateTime, nullable=False, default=datetime.now() + timedelta(hours=9))
+  created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
   updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
   osis = db.relationship('Osi', backref='user', lazy='dynamic', cascade='delete')
 

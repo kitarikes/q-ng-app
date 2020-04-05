@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, session, redirect
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import or_
 import bcrypt
 import os
 from os.path import join, dirname
@@ -223,6 +224,33 @@ def get_messages(r_id):
         return redirect('/messages/{}'.format(r_id))
     return redirect('/sign_in')
   return redirect('sign_in')
+
+@app.route('/messages')
+def message_li():
+  if 'login' in session:
+    if session['login']:
+      my_id = session['user_id']
+      rooms = db.session.query(Room).filter(or_(Room.user1_id==my_id, Room.user2_id==my_id)).all()
+      print(rooms)
+      r_data = []
+      for room in rooms:
+        if room.user1_id == my_id:
+          o_id = room.user2_id
+        else:
+          o_id = room.user1_id
+        o_name = db.session.query(User).get(o_id).nickname
+
+        d = sorted([[m.message, m.created_at] for m in room.messages], key=lambda x: x[1], reverse=True)
+        r_data.append([room, o_name, d[0]])
+      
+      r_data = sorted(r_data, key=lambda x: x[2])
+      print(r_data)
+
+      return render_template('message/list.html', r_data=r_data, s=session)
+    else:
+      redirect('/sign_in')
+  else:
+    redirect('/sign_in')
 
 # 検索機能
 @app.route('/search', methods=['GET', 'POST'])

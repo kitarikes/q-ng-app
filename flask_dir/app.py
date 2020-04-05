@@ -227,7 +227,7 @@ def message_li():
     if session['login']:
       my_id = session['user_id']
       r_data = []
-      
+
       try:
         rooms = db.session.query(Room).filter(or_(Room.user1_id==my_id, Room.user2_id==my_id)).all()
 
@@ -235,17 +235,20 @@ def message_li():
         pass
 
       else:
-        for room in rooms:
-          if room.user1_id == my_id:
-            o_id = room.user2_id
-          else:
-            o_id = room.user1_id
-          o_name = db.session.query(User).get(o_id).nickname
+        try:
+          for room in rooms:
+            if room.user1_id == my_id:
+              o_id = room.user2_id
+            else:
+              o_id = room.user1_id
+            o_name = db.session.query(User).get(o_id).nickname
 
-          d = sorted([[m.message, m.created_at] for m in room.messages], key=lambda x: x[1],  reverse=True)
-          r_data.append([room, o_name, d[0]])
+            d = sorted([[m.message, m.created_at] for m in room.messages], key=lambda x: x[1], reverse=True)
+            r_data.append([room, o_name, d[0]])
 
-        r_data = sorted(r_data, key=lambda x: x[2])
+          r_data = sorted(r_data, key=lambda x: x[2])
+        except:
+          return render_template('error.html', err="メッセージがありません、メッセージを送ってみましょう！", tips='/search', s=session)
 
       return render_template('message/list.html', r_data=r_data, s=session)
     else:

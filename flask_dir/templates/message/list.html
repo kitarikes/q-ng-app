@@ -1,6 +1,11 @@
 {% extends "layout.html" %}
 {% block style%}
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+<style>
+  .collection .collection-item {
+    border-bottom: 2px solid #e0e0e0;
+  }
+</style>
 {% endblock%}
 {% block content %}
 <div class="row" style="margin:30px;">
@@ -10,19 +15,28 @@
     <li class="collection-item avatar">
       <img src="https://img.nogizaka46.com/www/member/img/yamashitamizuki_prof.jpg" alt="" class="circle"
         style="margin-top: 12px;">
-      <span class="title" style="font-size: 20px;">{{d[1]}}</span><br>
+      <span class="title" style="font-size: 20px;">{{d[1]}}</span>
+      {%if push[d[0]] != 0%}
+      <a href="/messages/{{d[0]}}"class="waves-effect waves-light btn-small pulse right" style="background-color: red;"><span>{{push[d[0]]}}</span></a>
+      {%else%}
+      <a href="/messages/{{d[0]}}"class="waves-effect waves-light btn-small right" style="background-color: gray;"><span >{{push[d[0]]}}</span></a>
+      {%endif%}
+      <br>
       {% if d[2][0] | length <= 10 %}
       <span style="margin-left:20px;font-size: 16px;margin-top: 20px;">{{d[2][0]}}</span><br>
       {% else %}
       <span style="margin-left:20px;font-size: 16px;margin-top: 20px;">{{d[2][0][:10]}}...</span><br>
       {%endif%}
+      <!--
+      <a href="/messages/{{d[0].id}}"><span class="new badge" data-badge-caption='new message' style="margin-bottom: 20px;">{{push[d[0]]}}</span></a>-->
+      <!--
+      <a href="/messages/{{d[0].id}}" class="secondary-content" style="color: #4db6ac;"><i
+          class="fas fa-external-link-alt"></i></a>-->
 
       <span class="right" style="font-size: 12px;">{{d[2][1]}}</span>
-      </p>
-      <a href="/messages/{{d[0].id}}" class="secondary-content" style="color: #4db6ac;"><i
-          class="fas fa-external-link-alt"></i></a>
     </li>
     {%endfor%}
+  </div>
+    
   </ul>
-</div>
 {% endblock %}

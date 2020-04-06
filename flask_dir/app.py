@@ -5,6 +5,7 @@ import bcrypt
 import os
 from os.path import join, dirname
 from dotenv import load_dotenv
+from collections import defaultdict
 
 from flask_dir.database import init_db
 from flask_dir.models import User, Osi, Room, Message
@@ -25,13 +26,6 @@ db = SQLAlchemy(app)
 group_dict = {1: '乃木坂46', 2: '欅坂46', 3: '日向坂46'}
 user_dict = {'username':'ユーザー名','nickname':'名前', 'grade':'学年', 'osi_group':'推しグループ','comment':'自己紹介', 'department':'学部', 'sex':'性別', 'adr':'居住地', 'twitter_id': 'twitter'}
 sex_dict = {1: '男', 2:'女'}
-
-@app.before_request
-def before_request():
-    if request.url.startswith('http://'):
-        url = request.url.replace('http://', 'https://', 1)
-        code = 301
-        return redirect(url, code=code)
 
 @app.route('/')
 def home():
@@ -121,7 +115,7 @@ def mypage(u_id):
 
         osi_li = db.session.query(Osi).filter(Osi.user_id == u_id).all()
         osi_li = [osi.__dict__ for osi in osi_li]
-        return render_template('mypage/mypage.html', data=user_info, osi=osi_li, s=session, g_dic=group_dict, u_dic=user_dict, s_dic=sex_dict)
+        return render_template('mypage/mypage.html', data=user_info, osi=osi_li, s=session, g_dic=group_dict, u_dic=user_dict, s_dic=sex_dict, notify=get_new_messages())
       else:
         return redirect('/sign_in')
     else:
@@ -133,7 +127,7 @@ def mypage(u_id):
 def mypage_edit(u_id):
   if int(u_id) == session['user_id']:
     if request.method == 'GET':
-      return render_template('mypage/edit.html', s=session)
+      return render_template('mypage/edit.html', s=session, notify=get_new_messages())
     else:
       data = request.form
       # immutablemultidict を dict に変換
@@ -190,11 +184,17 @@ def get_messages(r_id):
   if 'login' in session:
     if session['login']:
       if request.method == 'GET':
+        my_id = session['user_id']
         # room情報取得
         r_id = int(r_id)
         r_q = db.session.query(Room).filter(Room.id==r_id).one()
-
         ms = r_q.messages
+        for m in ms.all():
+          if m.send_user_id != my_id and m.confirm_flg == 0:
+            m.confirm_flg = 1
+
+        db.session.commit()
+
         #print(ms.all())
         ms_data = [[m.send_user_id, m.message] for m in ms.all()]
 
@@ -204,7 +204,7 @@ def get_messages(r_id):
         else:
           o_id = r_q.user1_id
         o_q = db.session.query(User).filter(User.id==o_id).one()
-        return render_template('message/send.html', s=session, o_data=o_q, r_id=r_id, m_d=ms_data)
+        return render_template('message/send.html', s=session, o_data=o_q, r_id=r_id, m_d=ms_data, notify=get_new_messages())
       else: # POSTのとき
         r_id = int(r_id)
         r_q = db.session.query(Room).filter(Room.id==r_id).one()
@@ -236,16 +236,22 @@ def message_li():
     if session['login']:
       my_id = session['user_id']
       r_data = []
+      push_dict = defaultdict(int)
 
       try:
         rooms = db.session.query(Room).filter(or_(Room.user1_id==my_id, Room.user2_id==my_id)).all()
 
+        for room in rooms:
+          for m in room.messages:
+            if m.send_user_id != my_id and m.confirm_flg == 0:
+              push_dict[room.id] += 1
       except:
         pass
 
       else:
         try:
           for room in rooms:
+
             if room.user1_id == my_id:
               o_id = room.user2_id
             else:
@@ -253,13 +259,15 @@ def message_li():
             o_name = db.session.query(User).get(o_id).nickname
 
             d = sorted([[m.message, m.created_at] for m in room.messages], key=lambda x: x[1], reverse=True)
-            r_data.append([room, o_name, d[0]])
+            r_data.append([room.id, o_name, d[0]])
 
           r_data = sorted(r_data, key=lambda x: x[2])
         except:
-          return render_template('error.html', err="メッセージがありません、メッセージを送ってみましょう！", tips='/search', s=session)
+          return render_template('error.html', err="メッセージがありません、メッセージを送ってみましょう！", tips='/search', s=session, notify=0)
+      #print(push_dict)
+      #print(r_data)
 
-      return render_template('message/list.html', r_data=r_data, s=session)
+      return render_template('message/list.html', r_data=r_data, s=session, push=push_dict, notify=get_new_messages())
     else:
       redirect('/sign_in')
   else:
@@ -271,7 +279,7 @@ def search():
   if 'login' in session:
     if session['login']:
       if request.method == 'GET':
-        return render_template('search/search.html', s=session)
+        return render_template('search/search.html', s=session, notify=get_new_messages())
       else:
         data = request.form
         data = data.to_dict(flat=True)
@@ -310,7 +318,7 @@ def search():
 
         #print(data)
 
-        return render_template('search/result.html', s=session, data=data, g_dict=group_dict)
+        return render_template('search/result.html', s=session, data=data, g_dict=group_dict, notify=get_new_messages())
 
     else:
       return redirect('/sign_in')
@@ -342,4 +350,18 @@ def delete():
         return redirect('/sign_up')
 """
 
+
+# メッセージ通知(色変)
+def get_new_messages():
+  if 'login' in session:
+    if session['login']:
+      my_id = session['user_id']
+      rooms = db.session.query(Room).filter(or_(Room.user1_id==my_id, Room.user2_id==my_id)).all()
+      ans = 0
+      for room in rooms:
+        for m in room.messages:
+          if m.send_user_id != my_id and m.confirm_flg == 0:
+            ans += 1
+      return ans
+  return ''
 

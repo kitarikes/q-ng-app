@@ -11,9 +11,30 @@
   <script type="text/javascript" src="{{url_for('static', filename = 'js/select.js')}}"></script>
   <title>q-zaka</title>
   <style>
-  body{
-    background-color: #f5f7f8;
-  }
+    body {
+      background-color: #f5f7f8;
+    }
+
+    .notification-badge {
+      position: relative;
+      right: 15px;
+      top: -15px;
+      color: #941e1e;
+      background-color: #f5f1f2;
+      margin: 0 -.8em;
+      border-radius: 50%;
+      padding: 5px 10px;
+    }
+    .notification-badge-mobile {
+      position: relative;
+      right: 30px;
+      top: -15px;
+      color: #941e1e;
+      background-color: #f5f1f2;
+      margin: 0 -.8em;
+      border-radius: 50%;
+      padding: 5px 10px;
+    }
   </style>
   {% block style %}
   {% endblock %}
@@ -38,9 +59,13 @@
           {%endif%}
           <li><a href="/mypage">Mypage<i class="material-icons left">person</i></a></li>
           {%if s.username%}
-          <li><a href="/messages"><i class="material-icons left">textsms</i>Message</a></li>
+          <li><a href="/messages"><i class="material-icons left notify">textsms</i>
+              {%if notify != 0%}
+              <small class="notification-badge">{{notify}}</small>
+              {%endif%}
+              Message</a></li>
           <li><a href="/sign_out">{{s.username}}からログアウト</a></li>
-          
+
           {%endif%}
         </ul>
       </div>
@@ -63,7 +88,12 @@
     {%if s.username%}
     <li><a href="/search"><i class="material-icons left">search</i>オタクを検索</a></li>
     <li><a href="/mypage">Mypage<i class="material-icons left">person</i></a></li>
-    <li><a href="/messages"><i class="material-icons left">textsms</i>Message</a></li>
+    <li><a href="/messages"><i class="material-icons left">textsms</i>
+        {%if notify != 0%}
+        <small class="notification-badge-mobile">{{notify}}</small>
+        {%endif%}
+        Message</a>
+    </li>
     <li><a href="/sign_out">{{s.username}} からログアウト</a></li>
     {%endif%}
   </ul>

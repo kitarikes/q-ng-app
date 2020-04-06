@@ -20,9 +20,18 @@ def create_app():
 app = create_app()
 app.secret_key = os.environ.get("SECRET_KEY") or 'aaa'
 db = SQLAlchemy(app)
+
+
 group_dict = {1: '乃木坂46', 2: '欅坂46', 3: '日向坂46'}
 user_dict = {'username':'ユーザー名','nickname':'名前', 'grade':'学年', 'osi_group':'推しグループ','comment':'自己紹介', 'department':'学部', 'sex':'性別', 'adr':'居住地', 'twitter_id': 'twitter'}
 sex_dict = {1: '男', 2:'女'}
+
+@app.before_request
+def before_request():
+    if request.url.startswith('http://'):
+        url = request.url.replace('http://', 'https://', 1)
+        code = 301
+        return redirect(url, code=code)
 
 @app.route('/')
 def home():

@@ -22,10 +22,10 @@
       <a href="/messages/{{d[0]}}"class="waves-effect waves-light btn-small right" style="background-color: gray;"><span >{{push[d[0]]}}</span></a>
       {%endif%}
       <br>
-      {% if d[2][0] | length <= 10 %}
+      {% if d[2][0] | length <= 8 %}
       <span style="margin-left:20px;font-size: 16px;margin-top: 20px;">{{d[2][0]}}</span><br>
       {% else %}
-      <span style="margin-left:20px;font-size: 16px;margin-top: 20px;">{{d[2][0][:10]}}...</span><br>
+      <span style="margin-left:20px;font-size: 16px;margin-top: 20px;">{{d[2][0][:8]}}...</span><br>
       {%endif%}
       <!--
       <a href="/messages/{{d[0].id}}"><span class="new badge" data-badge-caption='new message' style="margin-bottom: 20px;">{{push[d[0]]}}</span></a>-->

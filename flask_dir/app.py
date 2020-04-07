@@ -265,7 +265,7 @@ def message_li():
         except:
           return render_template('error.html', err="メッセージがありません、メッセージを送ってみましょう！", tips='/search', s=session, notify=0)
       #print(push_dict)
-      #print(r_data)
+      print(r_data)
 
       return render_template('message/list.html', r_data=r_data, s=session, push=push_dict, notify=get_new_messages())
     else:

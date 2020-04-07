@@ -204,7 +204,7 @@ def get_messages(r_id):
         else:
           o_id = r_q.user1_id
         o_q = db.session.query(User).filter(User.id==o_id).one()
-        return render_template('message/send.html', s=session, o_data=o_q, r_id=r_id, m_d=ms_data, notify=get_new_messages())
+        return render_template('sample.html', s=session, o_data=o_q, r_id=r_id, m_d=ms_data, notify=get_new_messages())
       else: # POSTのとき
         r_id = int(r_id)
         r_q = db.session.query(Room).filter(Room.id==r_id).one()
@@ -267,13 +267,20 @@ def message_li():
         except:
           return render_template('error.html', err="メッセージがありません、メッセージを送ってみましょう！", tips='/search', s=session, notify=0)
       #print(push_dict)
-      print(r_data)
+      #print(r_data)
 
       return render_template('message/list.html', r_data=r_data, s=session, push=push_dict, notify=get_new_messages())
     else:
       redirect('/sign_in')
   else:
     redirect('/sign_in')
+
+
+@app.route('/sample')
+def sample():
+  return render_template('sample.html', s=session)
+
+
 
 # 検索機能
 @app.route('/search', methods=['GET', 'POST'])

@@ -6,12 +6,6 @@
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.3.7/dist/js/uikit.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.3.7/dist/js/uikit-icons.min.js"></script>
 <style>
-  #clipped {
-  margin-bottom: 20px;
-  clip-path: url(#cross);
-  -webkit-clip-path: url(#cross);
-}
-
   .uk-card-small.uk-card-body {
     padding: 5px 8px;
     font-size: 13px;
@@ -88,12 +82,14 @@
     background: #fff;
     left: -4px;
     clip-path: polygon(100% 70%, 0% 100%, 100% 100%);
+    -webkit-clip-path: polygon(100% 70%, 0% 100%, 100% 100%);
   }
 
   .me .uk-card:after {
     background: #1e87f0;
     right: -4px;
     clip-path: polygon(0 70%, 0% 100%, 100% 100%);
+    -webkit-clip-path: polygon(0 70%, 0% 100%, 100% 100%);
   }
 
   .uk-h4,
@@ -108,12 +104,6 @@
   }
 </style>
 <script>
-  
-  var clipPathSelect = document.getElementById("clipPath");
-clipPathSelect.addEventListener("change", function (evt) {
-  document.getElementById("clipped").style.clipPath = evt.target.value;
-  document.getElementById("clipped").style.webkitClipPath = evt.target.value;
-});
 
   $('.uk-button').on('click', function () {
     $('.uk-section').toggleClass('uk-dark uk-light');
@@ -138,19 +128,14 @@ if(reset_target.value == ''){
     //750px以上の場合
     var windowHeight = $(window).height();
     console.log(windowHeight)
-    if (windowHeight >= 750) {
+    if (windowHeight >= 800) {
 $(function(){
     $("#responsiv").addClass('uk-height-large');
-    $("responsiv").mouseover(function(){
-    $(this).addClass('uk-height-large');})
 });
     //750px以下の場合
     } else {
 $(function(){
   $("#responsiv").addClass('uk-height-medium');
-    $("responsiv").mouseover(function(){
-        $(this).addClass('uk-height-medium');
-    });
 });
     };
 });

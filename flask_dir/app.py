@@ -266,6 +266,7 @@ def message_li():
           return render_template('error.html', err="メッセージがありません、メッセージを送ってみましょう！", tips='/search', s=session, notify=0)
       #print(push_dict)
       print(r_data)
+      r_data[2][1] = r_data[2][1].strftime("%Y/%m/%d %H:%M")
 
       return render_template('message/list.html', r_data=r_data, s=session, push=push_dict, notify=get_new_messages())
     else:

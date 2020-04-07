@@ -15,8 +15,10 @@ class User(db.Model):
   comment = db.Column(db.String(140))
   osi_group = db.Column(db.Integer)
   adr = db.Column(db.String(50))
-  created_at = db.Column(db.DateTime, nullable=False, default=datetime.now().strftime("%Y/%m/%d %H:%M"))
-  updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now().strftime("%Y/%m/%d %H:%M"), onupdate=datetime.now().strftime("%Y/%m/%d %H:%M"))
+  #created_at = db.Column(db.DateTime, nullable=False, default=datetime.now().strftime("%Y/%m/%d %H:%M"))
+  created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
+  #updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now().strftime("%Y/%m/%d %H:%M"), onupdate=datetime.now().strftime("%Y/%m/%d %H:%M"))
+  updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
   osis = db.relationship('Osi', backref='user', lazy='dynamic', cascade='delete')
 
 
@@ -36,7 +38,8 @@ class Room(db.Model):
   user1_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
   user2_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
   messages = db.relationship('Message', backref='room', lazy='dynamic', cascade='delete')
-  created_at = db.Column(db.DateTime, nullable=False, default=datetime.now().strftime("%Y/%m/%d %H:%M"))
+  #created_at = db.Column(db.DateTime, nullable=False, default=datetime.now().strftime("%Y/%m/%d %H:%M"))
+  created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
 
 class Message(db.Model):
@@ -47,5 +50,6 @@ class Message(db.Model):
   send_user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
   message = db.Column(db.String(600), nullable=False)
   confirm_flg = db.Column(db.Integer, default=0)
-  created_at = db.Column(db.DateTime, nullable=False, default=datetime.now().strftime("%Y/%m/%d %H:%M"))
+  #created_at = db.Column(db.DateTime, nullable=False, default=datetime.now().strftime("%Y/%m/%d %H:%M"))
+  created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
 

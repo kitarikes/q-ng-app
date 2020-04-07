@@ -6,6 +6,11 @@
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.3.7/dist/js/uikit.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.3.7/dist/js/uikit-icons.min.js"></script>
 <style>
+  #clipped {
+  margin-bottom: 20px;
+  clip-path: url(#cross);
+  -webkit-clip-path: url(#cross);
+}
 
   .uk-card-small.uk-card-body {
     padding: 5px 8px;
@@ -103,6 +108,13 @@
   }
 </style>
 <script>
+  
+  var clipPathSelect = document.getElementById("clipPath");
+clipPathSelect.addEventListener("change", function (evt) {
+  document.getElementById("clipped").style.clipPath = evt.target.value;
+  document.getElementById("clipped").style.webkitClipPath = evt.target.value;
+});
+
   $('.uk-button').on('click', function () {
     $('.uk-section').toggleClass('uk-dark uk-light');
 
@@ -121,10 +133,31 @@ if(reset_target.value == ''){
     reset_target.value = '';
 }
   }
+
+  jQuery(document).ready(function($) {
+    //750px以上の場合
+    var windowHeight = $(window).height();
+    console.log(windowHeight)
+    if (windowHeight >= 750) {
+$(function(){
+    $("#responsiv").addClass('uk-height-large');
+    $("responsiv").mouseover(function(){
+    $(this).addClass('uk-height-large');})
+});
+    //750px以下の場合
+    } else {
+$(function(){
+  $("#responsiv").addClass('uk-height-medium');
+    $("responsiv").mouseover(function(){
+        $(this).addClass('uk-height-medium');
+    });
+});
+    };
+});
 </script>
 {%endblock%}
 {%block content%}
-<div class="uk-container uk-width-large">
+<div class="uk-container uk-width-large uk-position-fixed">
   <div class="uk-section" style="margin-bottom: 20px;padding-top: 0mm;">
     <div class="uk-card uk-card-default uk-border-rounded uk-margin-small-top">
       <div class="uk-card-header">
@@ -141,7 +174,7 @@ if(reset_target.value == ''){
 
       <div class="uk-card-body uk-padding-small">
 
-        <div class="uk-overflow-auto uk-height-medium">
+        <div class="uk-overflow-auto" id='responsiv'>
           {% for m in m_d %}
           {% if m[0] == o_data.id %}
           <div class="guest uk-grid-small uk-flex-bottom uk-flex-left" uk-grid>

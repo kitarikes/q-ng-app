@@ -196,7 +196,7 @@
 
   window.addEventListener('load', function () {
 
-    setInterval(dojQueryAjax, 5000);
+    setInterval(dojQueryAjax, 1000);
 
   });
 
@@ -265,7 +265,7 @@
 
       <div class="uk-card-body uk-padding-small" id='ajaxreload'>
 
-        <div class="uk-overflow-auto" id='responsiv'>
+        <div class="uk-overflow-auto" id='responsiv' style="overflow-y: auto;overflow-x: hidden;">
           <div id='reloadcontent'>
             {% for m in m_d %}
             {% if m[0] == o_data.id %}

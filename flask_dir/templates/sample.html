@@ -104,41 +104,138 @@
   }
 </style>
 <script>
-
-  $('.uk-button').on('click', function () {
-    $('.uk-section').toggleClass('uk-dark uk-light');
-
-    $('.uk-container > .uk-card').toggleClass('uk-card-default uk-card-secondary');
-
-    $('html').toggleClass('uk-background-muted uk-background-secondary');
-  });
-
-  function reset(){
-
-var reset_target = document.getElementById("text");
-
-if(reset_target.value == ''){
-    alert('すでにリセットされています。');
-}else{
-    reset_target.value = '';
-}
+  // スクロール
+  function scrollContent() {
+    var pos = $("div.scroll-content").slice(-1);
+    pos = pos.position();
+    console.log(pos);
+    $("#responsiv").scrollTop(pos.top + 10000);
   }
 
-  jQuery(document).ready(function($) {
+  function upscrollContent() {
+    var pos = $("div.scroll-content").slice(0);
+    pos = pos.position();
+    console.log(pos);
+    $("#responsiv").scrollTop(pos.top);
+  }
+
+  // xボタンで入力値削除
+  function reset() {
+    var reset_target = document.getElementById("text");
+
+    if (reset_target.value == '') {
+      alert('すでにリセットされています。');
+    } else {
+      reset_target.value = '';
+    }
+  }
+
+  // 画面サイズによってチャット画面の長さ設定
+  jQuery(document).ready(function ($) {
     //750px以上の場合
     var windowHeight = $(window).height();
     console.log(windowHeight)
     if (windowHeight >= 800) {
-$(function(){
-    $("#responsiv").addClass('uk-height-large');
-});
-    //750px以下の場合
+      $(function () {
+        $("#responsiv").addClass('uk-height-large');
+      });
+      //750px以下の場合
     } else {
-$(function(){
-  $("#responsiv").addClass('uk-height-medium');
-});
+      $(function () {
+        $("#responsiv").addClass('uk-height-medium');
+      });
     };
-});
+
+    //scrollContent();
+  });
+
+  //非同期通信
+  function dojQueryAjax() {
+
+    // jQueryのajaxメソッドを使用しajax通信
+    $.ajax({
+      type: "GET", // GETメソッドで通信
+
+      url: location.href, // 取得先のURL
+
+      cache: false, // キャッシュしないで読み込み
+
+      // 通信成功時に呼び出されるコールバック
+      success: function (data) {
+        $('#responsiv').html($(data).find('#reloadcontent'));
+        //scrollContent();
+        /*
+        var windowHeight = $(window).height();
+        console.log(windowHeight)
+        if (windowHeight >= 800) {
+            $(function(){
+                $("#responsiv").addClass('uk-height-large');
+            }); 
+            //750px以下の場合
+            } else {
+                $(function(){
+                    $("#responsiv").addClass('uk-height-medium');
+                });
+            };*/
+
+      },
+      // 通信エラー時に呼び出されるコールバック
+      error: function () {
+
+        alert("Ajax通信エラー");
+
+
+      }
+    });
+
+  }
+
+  window.addEventListener('load', function () {
+
+    setInterval(dojQueryAjax, 5000);
+
+  });
+
+  function ajaxSubmit() {
+    var m = $('textarea[name="message"]').val();
+    $('textarea[name="message"]').val('');
+
+    // jQueryのajaxメソッドを使用しajax通信
+    $.ajax({
+      type: "POST", // GETメソッドで通信
+
+      url: location.href, // 取得先のURL
+
+      cache: false, // キャッシュしないで読み込み
+      
+      data: { message: m },
+      /*
+        // 通信成功時に呼び出されるコールバック
+        success: function (data) {
+          $('#responsiv').html($(data).find('#reloadcontent'));
+      
+        },
+        // 通信エラー時に呼び出されるコールバック
+        error: function () {
+      
+          alert("Ajax通信エラー");
+        }*/
+        success: function(){
+          dojQueryAjax();
+          scrollContent();
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+         alert('error!!!');
+　　      console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+　　      console.log("textStatus     : " + textStatus);
+　　      console.log("errorThrown    : " + errorThrown.message);
+    }
+  });
+    
+    //
+  }
+
+
 </script>
 {%endblock%}
 {%block content%}
@@ -147,69 +244,81 @@ $(function(){
     <div class="uk-card uk-card-default uk-border-rounded uk-margin-small-top">
       <div class="uk-card-header">
         <div class="uk-grid-small uk-flex-middle" uk-grid>
-            <div class="uk-width-auto">
-                <img class="uk-border-circle" width="40" height="40" src="https://img.nogizaka46.com/www/member/img/yamashitamizuki_prof.jpg">
-            </div>
-            <div class="uk-width-expand">
-                <h3 class="uk-card-title uk-margin-remove-bottom">{{o_data.nickname}}さん</h3>
-                <p class="uk-text-meta uk-margin-remove-top">{{o_data.department}} {{o_data.grade}}年</p>
-            </div>
-        </div>
-    </div>
-
-      <div class="uk-card-body uk-padding-small">
-
-        <div class="uk-overflow-auto" id='responsiv'>
-          {% for m in m_d %}
-          {% if m[0] == o_data.id %}
-          <div class="guest uk-grid-small uk-flex-bottom uk-flex-left" uk-grid>
-            <div class="uk-width-auto">
-              <img class="uk-border-circle" width="32" height="32" src="https://img.nogizaka46.com/www/member/img/yamashitamizuki_prof.jpg">
-            </div>
-            <div class="uk-width-auto">
-              <div class="uk-card uk-card-body uk-card-small uk-card-default uk-border-rounded">
-                <p class="uk-margin-remove">{{m[1]}}</p>
-              </div>
-            </div>
-          </div>
-
-          {% else %}
-
-          <div class="me uk-grid-small uk-flex-bottom uk-flex-right uk-text-right" uk-grid>
-            <div class="uk-width-auto">
-              <div class="uk-card uk-card-body uk-card-small uk-card-primary uk-border-rounded">
-                <p class="uk-margin-remove">{{m[1]}}</p>
-              </div>
-            </div>
-            <div class="uk-width-auto">
-              <img class="uk-border-circle" width="32" height="32" src="https://img.nogizaka46.com/www/member/img/yamashitamizuki_prof.jpg">
-            </div>
-          </div>
-          {%endif%}
-          {%endfor%}
-        </div>
-      </div>
-      <form action="/messages/{{r_id}}" , method="POST", name="subform">
-      <div class="uk-card-footer uk-padding-remove">
-        <div class="uk-grid-small uk-flex-middle" uk-grid>
           <div class="uk-width-auto">
-            <a href="javascript:reset()" class="uk-icon-link uk-margin-small-left" uk-icon="icon: close"></a>
+            <img class="uk-border-circle" width="40" height="40"
+              src="https://img.nogizaka46.com/www/member/img/yamashitamizuki_prof.jpg">
           </div>
           <div class="uk-width-expand">
-            <div class="uk-padding-small uk-padding-remove-horizontal">
-              <textarea class="uk-textarea uk-padding-remove uk-border-remove" rows="1"
-                placeholder="よろしくお願いします！" name='message' id='text'></textarea>
-            </div>
-          </div>
-          <div class="uk-width-auto">
-            <ul class="uk-iconnav uk-margin-small-right">
-              <li style="margin-top: -15px;">
-                <a href="javascript:subform.submit()" class="uk-icon-link uk-margin-small-left" uk-icon="icon: reply"></a>
-              </li>
-            </ul>
+            <h3 class="uk-card-title uk-margin-remove-bottom">{{o_data.nickname}}さん</h3>
+            <p class="uk-text-meta uk-margin-remove-top">{{o_data.department}} {{o_data.grade}}年<a href="javascript:scrollContent()" class="uk-icon-link uk-margin-small-left right"
+                uk-icon="icon: arrow-down"></a>
+              <a href="javascript:upscrollContent()" class="uk-icon-link uk-margin-small-left right"
+                uk-icon="icon: arrow-up"></a>
+            </p>
           </div>
         </div>
       </div>
+
+      <div class="uk-card-body uk-padding-small" id='ajaxreload'>
+
+        <div class="uk-overflow-auto" id='responsiv'>
+          <div id='reloadcontent'>
+            {% for m in m_d %}
+            {% if m[0] == o_data.id %}
+            <div class="guest uk-grid-small uk-flex-bottom uk-flex-left scroll-content" uk-grid>
+              <div class="uk-width-auto">
+                <img class="uk-border-circle" width="32" height="32"
+                  src="https://img.nogizaka46.com/www/member/img/yamashitamizuki_prof.jpg">
+              </div>
+              <div class="uk-width-auto">
+                <div class="uk-card uk-card-body uk-card-small uk-card-default uk-border-rounded">
+                  <p class="uk-margin-remove">{{m[1]}}</p>
+                </div>
+              </div>
+            </div>
+
+            {% else %}
+
+            <div class="me uk-grid-small uk-flex-bottom uk-flex-right uk-text-right scroll-content" uk-grid>
+              <div class="uk-width-auto">
+                <div class="uk-card uk-card-body uk-card-small uk-card-primary uk-border-rounded">
+                  <p class="uk-margin-remove">{{m[1]}}</p>
+                </div>
+              </div>
+              <div class="uk-width-auto">
+                <img class="uk-border-circle" width="32" height="32"
+                  src="https://img.nogizaka46.com/www/member/img/yamashitamizuki_prof.jpg">
+              </div>
+            </div>
+            {%endif%}
+            {%endfor%}
+          </div>
+        </div>
+      </div>
+      <form action="/messages/{{r_id}}" , method="POST" , name="subform">
+        <div class="uk-card-footer uk-padding-remove">
+          <div class="uk-grid-small uk-flex-middle" uk-grid>
+            <div class="uk-width-auto">
+              <a href="javascript:reset()" class="uk-icon-link uk-margin-small-left" uk-icon="icon: close"></a>
+            </div>
+            <div class="uk-width-expand">
+              <div class="uk-padding-small uk-padding-remove-horizontal">
+                <textarea class="uk-textarea uk-padding-remove uk-border-remove" rows="1" placeholder="よろしくお願いします！"
+                  name='message' id='text'></textarea>
+              </div>
+            </div>
+            <div class="uk-width-auto">
+              <ul class="uk-iconnav uk-margin-small-right">
+                <li style="margin-top: -15px;">
+                  <!--
+                  <a href="javascript:subform.submit()" class="uk-icon-link uk-margin-small-left"uk-icon="icon: reply"></a>
+                  -->
+                  <a href="javascript:ajaxSubmit()" class="uk-icon-link uk-margin-small-left" uk-icon="icon: reply"></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </form>
     </div>
   </div>

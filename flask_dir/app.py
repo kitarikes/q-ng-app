@@ -23,9 +23,15 @@ app.secret_key = os.environ.get("SECRET_KEY") or 'aaa'
 db = SQLAlchemy(app)
 
 
+
 group_dict = {1: '乃木坂46', 2: '欅坂46', 3: '日向坂46'}
 user_dict = {'username':'ユーザー名','nickname':'名前', 'grade':'学年', 'osi_group':'推しグループ','comment':'自己紹介', 'department':'学部', 'sex':'性別', 'adr':'居住地', 'twitter_id': 'twitter'}
 sex_dict = {1: '男', 2:'女'}
+
+
+
+
+
 
 @app.route('/')
 def home():
@@ -211,7 +217,8 @@ def get_messages(r_id):
 
         if session['user_id'] != r_q.user1_id and session['user_id'] != r_q.user2_id :
           return "you cannot access this account!!"
-        m = request.form['message']
+        
+        m = request.form['message'] 
         
         data = {}
         data_ = {}
@@ -225,8 +232,31 @@ def get_messages(r_id):
 
         db.session.add(Message(**data))
         db.session.commit()
+
+
+        my_id = session['user_id']
+        # room情報取得
+        r_id = int(r_id)
+        r_q = db.session.query(Room).filter(Room.id==r_id).one()
+        ms = r_q.messages
+        for m in ms.all():
+          if m.send_user_id != my_id and m.confirm_flg == 0:
+            m.confirm_flg = 1
+
+        db.session.commit()
+
+        #print(ms.all())
+        ms_data = [[m.send_user_id, m.message] for m in ms.all()]
+
+        # 相手の情報取得
+        if r_q.user1_id == session['user_id']:
+          o_id = r_q.user2_id
+        else:
+          o_id = r_q.user1_id
+        o_q = db.session.query(User).filter(User.id==o_id).one()
+        return render_template('sample.html', s=session, o_data=o_q, r_id=r_id, m_d=ms_data, notify=get_new_messages())
         
-        return redirect('/messages/{}'.format(r_id))
+        #return redirect('/messages/{}'.format(r_id))
     return redirect('/sign_in')
   return redirect('sign_in')
 

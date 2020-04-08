@@ -210,7 +210,7 @@ def get_messages(r_id):
         else:
           o_id = r_q.user1_id
         o_q = db.session.query(User).filter(User.id==o_id).one()
-        return render_template('sample.html', s=session, o_data=o_q, r_id=r_id, m_d=ms_data, notify=get_new_messages())
+        return render_template('message/main.html', s=session, o_data=o_q, r_id=r_id, m_d=ms_data, notify=get_new_messages())
       else: # POSTのとき
         r_id = int(r_id)
         r_q = db.session.query(Room).filter(Room.id==r_id).one()
@@ -232,31 +232,8 @@ def get_messages(r_id):
 
         db.session.add(Message(**data))
         db.session.commit()
-
-
-        my_id = session['user_id']
-        # room情報取得
-        r_id = int(r_id)
-        r_q = db.session.query(Room).filter(Room.id==r_id).one()
-        ms = r_q.messages
-        for m in ms.all():
-          if m.send_user_id != my_id and m.confirm_flg == 0:
-            m.confirm_flg = 1
-
-        db.session.commit()
-
-        #print(ms.all())
-        ms_data = [[m.send_user_id, m.message] for m in ms.all()]
-
-        # 相手の情報取得
-        if r_q.user1_id == session['user_id']:
-          o_id = r_q.user2_id
-        else:
-          o_id = r_q.user1_id
-        o_q = db.session.query(User).filter(User.id==o_id).one()
-        return render_template('sample.html', s=session, o_data=o_q, r_id=r_id, m_d=ms_data, notify=get_new_messages())
         
-        #return redirect('/messages/{}'.format(r_id))
+        return redirect('/messages/{}'.format(r_id))
     return redirect('/sign_in')
   return redirect('sign_in')
 
@@ -304,13 +281,6 @@ def message_li():
       redirect('/sign_in')
   else:
     redirect('/sign_in')
-
-
-@app.route('/sample')
-def sample():
-  return render_template('sample.html', s=session)
-
-
 
 # 検索機能
 @app.route('/search', methods=['GET', 'POST'])

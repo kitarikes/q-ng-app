@@ -151,6 +151,7 @@
 
   //非同期通信
   function dojQueryAjax() {
+    var beforeLen = $("div.scroll-content").length;
 
     // jQueryのajaxメソッドを使用しajax通信
     $.ajax({
@@ -162,8 +163,11 @@
 
       // 通信成功時に呼び出されるコールバック
       success: function (data) {
+        var afterLen = $(data).find('div.scroll-content').length;
+        if (afterLen > beforeLen){
         $('#responsiv').html($(data).find('#reloadcontent'));
-        //scrollContent();
+        scrollContent();
+      }
         /*
         var windowHeight = $(window).height();
         console.log(windowHeight)

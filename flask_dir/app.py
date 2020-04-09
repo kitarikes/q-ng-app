@@ -22,16 +22,9 @@ app = create_app()
 app.secret_key = os.environ.get("SECRET_KEY") or 'aaa'
 db = SQLAlchemy(app)
 
-
-
 group_dict = {1: '乃木坂46', 2: '欅坂46', 3: '日向坂46'}
 user_dict = {'username':'ユーザー名','nickname':'名前', 'grade':'学年', 'osi_group':'推しグループ','comment':'自己紹介', 'department':'学部', 'sex':'性別', 'adr':'居住地', 'twitter_id': 'twitter'}
 sex_dict = {1: '男', 2:'女'}
-
-
-
-
-
 
 @app.route('/')
 def home():
@@ -63,7 +56,7 @@ def sing_up():
       db.session.commit()
       return render_template('auth/finished.html', s=session)
     else:
-      return 'error: already sign_upped !'
+      return 'このユーザー名は使われています !'
 
 @app.route('/sign_in', methods=['GET', 'POST'])
 def sign_in():
@@ -85,6 +78,17 @@ def sign_in():
       session['login'] = True
       session['user_id'] = dbnames[0].id
       session['username'] = dbnames[0].username
+
+      osi_li = db.session.query(Osi).filter(Osi.user_id == dbnames[0].id).all()
+      for osi in osi_li:
+        if osi.osi_grade == 1:
+          session['osi'] = osi.osi_name
+          break
+      else:
+        session['osi'] = 'logo'
+
+
+
       return redirect('/mypage/{}'.format(session['user_id']))
     else:
       return redirect('/sign_in')
@@ -145,6 +149,10 @@ def mypage_edit(u_id):
       data['user_id'] = int(session['user_id'])
       data['osi_name'] = str(data['osi_name']).replace(' ', '')
       data['osi_name'] = str(data['osi_name']).replace('　', '')
+
+      if int(data['osi_grade']) == 1:
+        session['osi'] = data['osi_name']
+
       if len(osi_li) != 0:
         db.session.query(Osi).filter(Osi.user_id == int(u_id) , Osi.osi_grade == data['osi_grade']) .delete()
       db.session.add(Osi(**data))
@@ -210,7 +218,10 @@ def get_messages(r_id):
         else:
           o_id = r_q.user1_id
         o_q = db.session.query(User).filter(User.id==o_id).one()
-        return render_template('message/main.html', s=session, o_data=o_q, r_id=r_id, m_d=ms_data, notify=get_new_messages())
+
+        o_osi_name = get_kamiosi(o_id)
+
+        return render_template('message/main.html', s=session, o_data=o_q, r_id=r_id, m_d=ms_data, notify=get_new_messages(), o_osi=o_osi_name)
       else: # POSTのとき
         r_id = int(r_id)
         r_q = db.session.query(Room).filter(Room.id==r_id).one()
@@ -266,9 +277,12 @@ def message_li():
             o_name = db.session.query(User).get(o_id).nickname
 
             d = sorted([[m.message, m.created_at] for m in room.messages], key=lambda x: x[1], reverse=True)
-            print(d)
+            #print(d)
             d[0][1] = d[0][1].strftime("%Y/%m/%d %H:%M")
-            r_data.append([room.id, o_name, d[0]])
+
+            o_osi_name = get_kamiosi(o_id)
+
+            r_data.append([room.id, o_name, d[0], o_osi_name])
 
           r_data = sorted(r_data, key=lambda x: x[2])
         except:
@@ -359,7 +373,6 @@ def delete():
         return redirect('/sign_up')
 """
 
-
 # メッセージ通知(色変)
 def get_new_messages():
   if 'login' in session:
@@ -374,3 +387,13 @@ def get_new_messages():
       return ans
   return ''
 
+# 神推し取得
+def get_kamiosi(u_id):
+  user = db.session.query(User).get(int(u_id))
+  osi_li = user.osis
+  name = 'logo'
+  for osi in osi_li:
+    if osi.osi_grade == 1:
+      name = osi.osi_name
+      break
+  return name

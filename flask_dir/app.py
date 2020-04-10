@@ -133,31 +133,26 @@ def mypage(u_id):
   else: # method POST
     return 'error: no page!!'
 
-@app.route('/mypage/<u_id>/edit', methods=['GET', 'POST'])
+@app.route('/mypage/<u_id>/edit', methods=['POST'])
 def mypage_edit(u_id):
   if int(u_id) == session['user_id']:
-    if request.method == 'GET':
-      return render_template('mypage/edit.html', s=session, notify=get_new_messages())
-    else:
-      data = request.form
-      # immutablemultidict を dict に変換
-      print(data.to_dict(flat=True))
-      data = data.to_dict(flat=True)
-      data['group'] = int(data['group'])
-      data['osi_grade'] = int(data['osi_grade'])
-      osi_li = db.session.query(Osi).filter(Osi.user_id == int(u_id) , Osi.osi_grade == data  ['osi_grade']).all()
-      data['user_id'] = int(session['user_id'])
-      data['osi_name'] = str(data['osi_name']).replace(' ', '')
-      data['osi_name'] = str(data['osi_name']).replace('　', '')
-
-      if int(data['osi_grade']) == 1:
-        session['osi'] = data['osi_name']
-
-      if len(osi_li) != 0:
-        db.session.query(Osi).filter(Osi.user_id == int(u_id) , Osi.osi_grade == data['osi_grade']) .delete()
-      db.session.add(Osi(**data))
-      db.session.commit()
-      return redirect('/mypage/{}'.format(u_id))
+    data = request.form
+    # immutablemultidict を dict に変換
+    print(data.to_dict(flat=True))
+    data = data.to_dict(flat=True)
+    data['group'] = int(data['group'])
+    data['osi_grade'] = int(data['osi_grade'])
+    osi_li = db.session.query(Osi).filter(Osi.user_id == int(u_id) , Osi.osi_grade == data  ['osi_grade']).all()
+    data['user_id'] = int(session['user_id'])
+    data['osi_name'] = str(data['osi_name']).replace(' ', '')
+    data['osi_name'] = str(data['osi_name']).replace('　', '')
+    if int(data['osi_grade']) == 1:
+      session['osi'] = data['osi_name']
+    if len(osi_li) != 0:
+      db.session.query(Osi).filter(Osi.user_id == int(u_id) , Osi.osi_grade == data['osi_grade']) .delete()
+    db.session.add(Osi(**data))
+    db.session.commit()
+    return redirect('/mypage/{}'.format(u_id))
   else:
     return "error: not enable to access your account!!"
 

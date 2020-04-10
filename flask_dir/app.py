@@ -161,6 +161,51 @@ def mypage_edit(u_id):
   else:
     return "error: not enable to access your account!!"
 
+@app.route('/mypage/<u_id>/profile/edit', methods=['POST'])
+def profile_edit(u_id):
+  if 'login' in session:
+    if session['login']:
+      if int(u_id) == session['user_id']:
+        data = request.form
+        data = data.to_dict()
+        k = list(data.keys())[0]
+        v = list(data.values())[0]
+        if k in ['sex', 'grade', 'osi_group']:
+          d = int(v)
+        elif k == 'twitter_id':
+          d = str(v).replace('@', '')
+        else:
+          d = v
+        
+        user = db.session.query(User).get(int(u_id))
+
+        if k == 'nickname':
+          user.nickname = v
+        elif k == 'grade':
+          user.grade = v
+        elif k == 'department':
+          user.department = v
+        elif k == 'adr':
+          user.adr = v
+        elif k == 'sex':
+          user.sex = v
+        elif k == 'osi_group':
+          user.osi_group = v
+        elif k == 'twitter_id':
+          user.twitter_id = v
+        elif k == 'comment':
+          user.comment = v
+
+        db.session.commit()
+
+        return redirect('/mypage')
+    else:
+      return redirect('/sign_in')
+  else:
+    return redirect('/sign_in')
+
+
+
 # Message機能
 @app.route('/messages/mkroom/<u_id>', methods=['GET'])
 def message(u_id):

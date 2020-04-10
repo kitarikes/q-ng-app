@@ -15,29 +15,47 @@
     color: black;
     border-bottom: 1.5px solid #4db6ac;
   }
+
+  .pro-edit {
+    font-size: 18px !important;
+    margin-left: -20px;
+    margin-top: 10px;
+    color: grey;
+  }
 </style>
 <script>
-    jQuery(document).ready(function ($) {
+  // レイアウト
+  jQuery(document).ready(function ($) {
     //750px以上の場合
     var windowWidth = $(window).width();
     console.log(windowWidth)
     if (windowWidth >= 1000) {
       $(function () {
-        $(".mobileconvert1").css('margin-left', '42px');
-        $(".mobileconvert2").css('margin-left', '96px');
+        //$(".mobileconvert1").css('margin-left', '42px');
+        //$(".mobileconvert2").css('margin-left', '96px');
       });
       //750px以下の場合
     }
-    //scrollContent();
   });
+  // Or with jQuery
+
+  $(document).ready(function () {
+    $('.modal').modal();
+  });
+
+  $(document).ready(function () {
+    $('select').formSelect();
+  });
+
+
 </script>
 {% endblock%}
 {% block content %}
 <div class="row" style="margin: 10px;">
   <div class="col s12 l5" style="margin-top: -30px;">
     <p style="font-size: 32px;margin-bottom: 12px;"><i class="fas fa-crown prefix" style="color:#afb42b;"><span
-      style="color: black;">
-      神推し</span></i></p>
+          style="color: black;">
+          神推し</span></i></p>
     {% for o in osi %}
     {% if o.osi_grade == 1 %}
     <div class="input-field" style="width: 250px;margin-left: 30px;">
@@ -70,6 +88,23 @@
           <i class="fas fa-user-circle prefix"></i>
           <input readonly="readonly" id="icon_prefix" type="text" class="validate" value={{data.nickname}}>
           <label for="icon_prefix">名前</label>
+          <a class="modal-trigger" href="#modal1"><i class="material-icons prefix pro-edit">edit</i></a>
+        </div>
+        <!--modal-->
+        <div id="modal1" class="modal">
+          <div class="modal-content">
+            <form action="/mypage/{{data.id}}/profile/edit" method="POST" name='form1'>
+              <h4>Edit!</h4>
+              <div class="input-field">
+                <input id="nickname" type="text" class="validate" name='nickname' required>
+                <label for="nickname">名前</label>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+            <a href="javascript:form1.submit()" class="modal-close waves-effect waves-green btn-flat">Submit!</a>
+            </form>
+          </div>
         </div>
       </li>
       <li class="collection-item col l6 s12">
@@ -77,6 +112,30 @@
           <i class="material-icons prefix">grade</i>
           <input readonly="readonly" id="icon_prefix" type="text" class="validate" value=学部{{data.grade}}年>
           <label for="icon_prefix">学年</label>
+          <a class="modal-trigger" href="#modal2"><i class="material-icons prefix pro-edit">edit</i></a>
+        </div>
+        <!--modal-->
+        <div id="modal2" class="modal">
+          <div class="modal-content">
+            <form action="/mypage/{{data.id}}/profile/edit" method="POST" name='form2'>
+              <h4>Edit!</h4>
+              <div class="input-field">
+                <select name='grade' required>
+                  <option value="" disabled selected>選択してください</option>
+                  <option value="1">学部１年</option>
+                  <option value="2">学部２年</option>
+                  <option value="3">学部３年</option>
+                  <option value="4">学部４年</option>
+                  <option value="0">その他</option>
+                </select>
+                <label>学年</label>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+            <a href="javascript:form2.submit()" class="modal-close waves-effect waves-green btn-flat">Submit!</a>
+            </form>
+          </div>
         </div>
       </li>
       <li class="collection-item col l6 s12">
@@ -84,6 +143,37 @@
           <i class="material-icons prefix">school</i>
           <input readonly="readonly" id="icon_prefix" type="text" class="validate" value={{data.department}}>
           <label for="icon_prefix">学部</label>
+          <a class="modal-trigger" href="#modal3"><i class="material-icons prefix pro-edit">edit</i></a>
+        </div>
+        <!--modal-->
+        <div id="modal3" class="modal">
+          <div class="modal-content">
+            <form action="/mypage/{{data.id}}/profile/edit" method="POST" name='form3'>
+              <h4>Edit!</h4>
+              <div class="input-field">
+                <select name='department' required>
+                  <option value="" disabled selected>選択してください</option>
+                  <option value="共創学部">共創学部</option>
+                  <option value="文学部">文学部</option>
+                  <option value="教育学部">教育学部</option>
+                  <option value="法学部">法学部</option>
+                  <option value="経済学部">経済学部</option>
+                  <option value="理学部">理学部</option>
+                  <option value="医学部">医学部</option>
+                  <option value="歯学部">歯学部</option>
+                  <option value="薬学部">薬学部</option>
+                  <option value="工学部">工学部</option>
+                  <option value="芸術工学部">芸術工学部</option>
+                  <option value="農学部">農学部</option>
+                  <option value="その他">その他</option>
+                </select>
+                <label>学部</label>
+              </div>
+              <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+                <a href="javascript:form3.submit()" class="modal-close waves-effect waves-green btn-flat">Submit!</a>
+            </form>
+          </div>
         </div>
       </li>
       <li class="collection-item col l6 s12">
@@ -91,6 +181,23 @@
           <i class="material-icons prefix">home</i>
           <input readonly="readonly" id="icon_prefix" type="text" class="validate" value={{data.adr}}>
           <label for="icon_prefix">居住地</label>
+          <a class="modal-trigger" href="#modal4"><i class="material-icons prefix pro-edit">edit</i></a>
+        </div>
+        <!--modal-->
+        <div id="modal4" class="modal">
+          <div class="modal-content">
+            <form action="/mypage/{{data.id}}/profile/edit" method="POST" name='form4'>
+              <h4>Edit!</h4>
+              <div class="input-field">
+                <input id="adr" type="text" class="validate" name='adr' placeholder="支障が無い範囲でお答え下さい">
+                <label for="adr">居住地</label>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+            <a href="javascript:form4.submit()" class="modal-close waves-effect waves-green btn-flat">Submit!</a>
+            </form>
+          </div>
         </div>
       </li>
       <li class="collection-item col l6 s12">
@@ -105,6 +212,28 @@
           <i class="material-icons prefix">mood</i>
           <input readonly="readonly" id="icon_prefix" type="text" class="validate" value={{g_dic[data.osi_group]}}>
           <label for="icon_prefix">推しグループ</label>
+          <a class="modal-trigger" href="#modal5"><i class="material-icons prefix pro-edit">edit</i></a>
+        </div>
+        <!--modal-->
+        <div id="modal5" class="modal">
+          <div class="modal-content">
+            <form action="/mypage/{{data.id}}/profile/edit" method="POST" name='form5'>
+              <h4>Edit!</h4>
+              <div class="input-field">
+                <select name='osi_group' required>
+                  <option value="" disabled selected>選択してください</option>
+                  <option value="1">乃木坂46</option>
+                  <option value="2">欅坂46</option>
+                  <option value="3">日向坂46</option>
+                </select>
+                <label>推しグループ</label>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+            <a href="javascript:form5.submit()" class="modal-close waves-effect waves-green btn-flat">Submit!</a>
+            </form>
+          </div>
         </div>
       </li>
       <li class="collection-item col l6 s12">
@@ -116,56 +245,133 @@
           {% endif %}
           <input readonly="readonly" id="icon_prefix" type="text" class="validate" value={{data.twitter_id}}>
           <label for="icon_prefix">Twitter</label>
+          <a class="modal-trigger" href="#modal6"><i class="material-icons prefix pro-edit">edit</i></a>
         </div>
+        <!--modal-->
+        <div id="modal6" class="modal">
+          <div class="modal-content">
+            <form action="/mypage/{{data.id}}/profile/edit" method="POST" name='form6'>
+              <h4>Edit!</h4>
+              <div class="input-field">
+                <input id="twitter_id" type="text" class="validate" name='twitter_id' placeholder="@nogizaka46">
+                <label for="twitter_id">twitter_id</label>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+            <a href="javascript:form6.submit()" class="modal-close waves-effect waves-green btn-flat">Submit!</a>
+          </div>
+          </form>
       </li>
     </ul>
   </div>
   <div class="col s12 l4">
-    <a href="/mypage/{{data.id}}/edit" style="font-size: 20px;">推しメンを設定する</a>
+    <a class="modal-trigger" href="#edit-osi" style="font-size: 20px;">推しメンを設定する</a>
   </div>
-</div>
+  <!--modal-->
+  <div id="edit-osi" class="modal">
+    <div class="modal-content">
+      <h4>推しメン編集</h4>
+      <div class="row">
+        <form class="col s12" action="/mypage/{{s.user_id}}/edit" , method="POST">
+          <div class="row">
+            <div class="input-field col s12 l12">
+              <select name='group'>
+                <option value="" disabled selected>選択してください</option>
+                <option value="1">乃木坂46</option>
+                <option value="2">欅坂46</option>
+                <option value="3">日向坂46</option>
+              </select>
+              <label>グループ（必須）</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12 l12">
+              <input id="osi_name" type="text" class="validate" name='osi_name' placeholder="白石麻衣">
+              <label for="osi_name">メンバー名（必須）</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12 l12">
+              <select name='osi_grade'>
+                <option value="" disabled selected>選択してください</option>
+                <option value="1">１推し</option>
+                <option value="2">２推し</option>
+                <option value="3">３推し</option>
+              </select>
+              <label>何推し？（必須）</label>
+            </div>
+          </div>
+          <button class="btn waves-effect waves-light" type="submit">追加する
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
   <div class="row mobileconvert1" style="margin-left: 6px;">
-  <div class="col s6 l2" style="margin-left: -15px;">
-    {% for o in osi %}
-    {%if o.osi_grade == 2%}
-    <span style="font-size: 24px;"><i class="fas fa-crown prefix" style="color:#616161;"></i></span><span style="margin-left: 8px;font-size: 24px;
+    <div class="col s6 l2" style="margin-left: -15px;">
+      {% for o in osi %}
+      {%if o.osi_grade == 2%}
+      <span style="font-size: 24px;"><i class="fas fa-crown prefix" style="color:#616161;"></i></span><span style="margin-left: 8px;font-size: 24px;
     font-weight: bold;">{{o.osi_grade}}推し</span>
-    <div class="input-field" style="width: 150px; margin-left: 12px;margin-top: -4px;">
-      <input readonly="readonly" id="icon_prefix" type="text" class="validate" value={{o.osi_name}}
-        style="font-size: 20px;font-weight: bold;">
-      <label for="icon_prefix"></label>
+      <div class="input-field" style="width: 150px; margin-left: 12px;margin-top: -4px;">
+        <input readonly="readonly" id="icon_prefix" type="text" class="validate" value={{o.osi_name}}
+          style="font-size: 20px;font-weight: bold;">
+        <label for="icon_prefix"></label>
+      </div>
+      <div style="max-width: 80%;margin: auto;">
+        <img src="https://res.cloudinary.com/dcnwj1ge9/image/upload/v1586439381/q-u46/member-images/{{o.osi_name}}.jpg"
+          height="200">
+      </div>
+      {%endif%}
+      {%endfor%}
     </div>
-    <div style="max-width: 80%;margin: auto;">
-      <img src="https://res.cloudinary.com/dcnwj1ge9/image/upload/v1586439381/q-u46/member-images/{{o.osi_name}}.jpg"
-        height="200">
-    </div>
-    {%endif%}
-    {%endfor%}
-  </div>
-  <div class="col s6 l2">
-    {% for o in osi %}
-    {%if o.osi_grade == 3%}
-    <span style="font-size: 24px;"><i class="fas fa-crown prefix" style="color:#815a2b"></i></span><span style="margin-left: 8px;font-size: 24px;
+    <div class="col s6 l2">
+      {% for o in osi %}
+      {%if o.osi_grade == 3%}
+      <span style="font-size: 24px;"><i class="fas fa-crown prefix" style="color:#815a2b"></i></span><span style="margin-left: 8px;font-size: 24px;
     font-weight: bold;">{{o.osi_grade}}推し</span>
-    <div class="input-field" style="width: 150px;margin-left: 12px;margin-top: -4px;">
-      <input readonly="readonly" id="icon_prefix" type="text" class="validate" value={{o.osi_name}}
-        style="font-size: 20px;font-weight: bold;">
-      <label for="icon_prefix"></label>
+      <div class="input-field" style="width: 150px;margin-left: 12px;margin-top: -4px;">
+        <input readonly="readonly" id="icon_prefix" type="text" class="validate" value={{o.osi_name}}
+          style="font-size: 20px;font-weight: bold;">
+        <label for="icon_prefix"></label>
+      </div>
+      <div style="max-width: 80%;margin: auto;">
+        <img src="https://res.cloudinary.com/dcnwj1ge9/image/upload/v1586439381/q-u46/member-images/{{o.osi_name}}.jpg"
+          height="200">
+      </div>
+      {%endif%}
+      {%endfor%}
     </div>
-    <div style="max-width: 80%;margin: auto;">
-      <img src="https://res.cloudinary.com/dcnwj1ge9/image/upload/v1586439381/q-u46/member-images/{{o.osi_name}}.jpg"
-        height="200">
-    </div>
-    {%endif%}
-    {%endfor%}
-  </div>
 
     <div class="col s12 m5 l4 mobileconvert2" style="margin-top: 12px;">
-      <span style="font-size: 22px;"><i class="material-icons small left">comment</i><span>自己紹介</span></span>
+      <span style="font-size: 22px;"><i class="material-icons small left">comment</i><span>自己紹介</span>
+        <a class="modal-trigger" href="#modal7" style="margin-left: 55%;"><i
+            class="material-icons prefix pro-edit">edit</i></a>
+      </span>
       <div class="card-panel purple lighten-4">
         <span class="black-text" style="font-size: 18px;word-wrap: break-word">
           {{data.comment}}
         </span>
+      </div>
+      <!--modal-->
+      <div id="modal7" class="modal">
+        <div class="modal-content">
+          <form action="/mypage/{{data.id}}/profile/edit" method="POST" name='form7'>
+            <h4>Edit!</h4>
+            <div class="input-field">
+              <textarea id="textarea1" class="materialize-textarea" name='comment'></textarea>
+              <label for="textarea1">自己紹介</label>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+          <a href="javascript:form7.submit()" class="modal-close waves-effect waves-green btn-flat">Submit!</a>
+          </form>
+        </div>
       </div>
     </div>
   </div>

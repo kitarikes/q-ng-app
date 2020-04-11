@@ -1,0 +1,189 @@
+{% extends "layout.html" %}
+{% block style%}
+<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+<style>
+  body {
+    background-color: #e2eff5;
+  }
+
+  .collection .collection-item {
+    background-color: #e1bee7;
+  }
+
+  input[type=text]:not(.browser-default):disabled,
+  input[type=text]:not(.browser-default)[readonly="readonly"] {
+    color: black;
+    border-bottom: 1.5px solid #4db6ac;
+  }
+
+  .pro-edit {
+    font-size: 18px !important;
+    margin-left: -20px;
+    margin-top: 10px;
+    color: grey;
+  }
+</style>
+<script>
+  // レイアウト
+  jQuery(document).ready(function ($) {
+    //750px以上の場合
+    var windowWidth = $(window).width();
+    console.log(windowWidth)
+    if (windowWidth >= 1000) {
+      $(function () {
+        $(".mobileconvert1").css('margin-left', '60px');
+        $(".mobileconvert2").css('margin-left', '96px');
+      });
+      //750px以下の場合
+    }
+  });
+  // Or with jQuery
+
+  $(document).ready(function () {
+    $('.modal').modal();
+  });
+
+  $(document).ready(function () {
+    $('select').formSelect();
+  });
+
+
+</script>
+{% endblock%}
+{% block content %}
+<div class="row" style="margin: 10px;">
+  <div class="col s12 l5" style="margin-top: -30px;">
+    <p style="font-size: 32px;margin-bottom: 12px;"><i class="fas fa-crown prefix" style="color:#afb42b;"><span
+          style="color: black;">
+          神推し</span></i></p>
+    {% for o in osi %}
+    {% if o.osi_grade == 1 %}
+    <div class="input-field" style="width: 250px;margin-left: 30px;">
+      <i class="material-icons prefix" style="color: #e57373;">favorite</i>
+      <input readonly="readonly" id="icon_prefix" type="text" class="validate" value={{o.osi_name}}
+        style="font-size: 20px;font-weight: bold;">
+      <label for="icon_prefix"></label>
+    </div>
+    <div style="max-width: 80%;margin: auto;">
+      <img src="https://res.cloudinary.com/dcnwj1ge9/image/upload/v1586439381/q-u46/member-images/{{s['osi']}}.jpg"
+        alt="mizu" height="350">
+    </div>
+    {%endif%}
+    {%endfor%}
+  </div>
+  <div class="col s12 l6">
+    <ul class="collection" style="background-color: #ba68c8;">
+      <li class="collection-header center" style="border-bottom-style: solid;border-bottom-color: #e0e0e0;">
+        <h4 style="font-weight: bold;"><i class="far fa-address-card prefix"></i> Profile</h4>
+      </li>
+      <li class="collection-item col l6 s12">
+        <div class="input-field">
+          <i class="far fa-user-circle prefix"></i>
+          <input readonly="readonly" id="icon_prefix" type="text" class="validate" value={{data.username}}>
+          <label for="icon_prefix">ユーザー名</label>
+        </div>
+      </li>
+      <li class="collection-item col l6 s12">
+        <div class="input-field">
+          <i class="fas fa-user-circle prefix"></i>
+          <input readonly="readonly" id="icon_prefix" type="text" class="validate" value={{data.nickname}}>
+          <label for="icon_prefix">名前</label>
+        </div>
+      </li>
+      <li class="collection-item col l6 s12">
+        <div class="input-field">
+          <i class="material-icons prefix">grade</i>
+          <input readonly="readonly" id="icon_prefix" type="text" class="validate" value=学部{{data.grade}}年>
+          <label for="icon_prefix">学年</label>
+        </div>
+      </li>
+      <li class="collection-item col l6 s12">
+        <div class="input-field">
+          <i class="material-icons prefix">school</i>
+          <input readonly="readonly" id="icon_prefix" type="text" class="validate" value={{data.department}}>
+          <label for="icon_prefix">学部</label>
+        </div>
+      </li>
+      <li class="collection-item col l6 s12">
+        <div class="input-field">
+          <i class="material-icons prefix">home</i>
+          <input readonly="readonly" id="icon_prefix" type="text" class="validate" value={{data.adr}}>
+          <label for="icon_prefix">居住地</label>
+        </div>
+      </li>
+      <li class="collection-item col l6 s12">
+        <div class="input-field">
+          <i class="fas fa-venus-mars prefix"></i>
+          <input readonly="readonly" id="icon_prefix" type="text" class="validate" value={{s_dic[data.sex]}}性>
+          <label for="icon_prefix">性別</label>
+        </div>
+      </li>
+      <li class="collection-item col l6 s12">
+        <div class="input-field">
+          <i class="material-icons prefix">mood</i>
+          <input readonly="readonly" id="icon_prefix" type="text" class="validate" value={{g_dic[data.osi_group]}}>
+          <label for="icon_prefix">推しグループ</label>
+        </div>
+      </li>
+      <li class="collection-item col l6 s12">
+        <div class="input-field">
+          {% if data.twitter_id != ''%}
+          <a class="fab fa-twitter prefix" href="https://twitter.com/{{data.twitter_id}}"></a>
+          {% else %}
+          <i class="fab fa-twitter prefix"></i>
+          {% endif %}
+          <input readonly="readonly" id="icon_prefix" type="text" class="validate" value={{data.twitter_id}}>
+          <label for="icon_prefix">Twitter</label>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+  <div class="row mobileconvert1" style="margin-left: 6px;">
+    <div class="col s6 l2" style="margin-left: -15px;">
+      {% for o in osi %}
+      {%if o.osi_grade == 2%}
+      <span style="font-size: 24px;"><i class="fas fa-crown prefix" style="color:#616161;"></i></span><span style="margin-left: 8px;font-size: 24px;
+    font-weight: bold;">{{o.osi_grade}}推し</span>
+      <div class="input-field" style="width: 150px; margin-left: 12px;margin-top: -4px;">
+        <input readonly="readonly" id="icon_prefix" type="text" class="validate" value={{o.osi_name}}
+          style="font-size: 20px;font-weight: bold;">
+        <label for="icon_prefix"></label>
+      </div>
+      <div style="max-width: 80%;margin: auto;">
+        <img src="https://res.cloudinary.com/dcnwj1ge9/image/upload/v1586439381/q-u46/member-images/{{o.osi_name}}.jpg"
+          height="200">
+      </div>
+      {%endif%}
+      {%endfor%}
+    </div>
+    <div class="col s6 l2">
+      {% for o in osi %}
+      {%if o.osi_grade == 3%}
+      <span style="font-size: 24px;"><i class="fas fa-crown prefix" style="color:#815a2b"></i></span><span style="margin-left: 8px;font-size: 24px;
+    font-weight: bold;">{{o.osi_grade}}推し</span>
+      <div class="input-field" style="width: 150px;margin-left: 12px;margin-top: -4px;">
+        <input readonly="readonly" id="icon_prefix" type="text" class="validate" value={{o.osi_name}}
+          style="font-size: 20px;font-weight: bold;">
+        <label for="icon_prefix"></label>
+      </div>
+      <div style="max-width: 80%;margin: auto;">
+        <img src="https://res.cloudinary.com/dcnwj1ge9/image/upload/v1586439381/q-u46/member-images/{{o.osi_name}}.jpg"
+          height="200">
+      </div>
+      {%endif%}
+      {%endfor%}
+    </div>
+
+    <div class="col s12 m5 l4 mobileconvert2" style="margin-top: 12px;">
+      <span style="font-size: 22px;"><i class="material-icons small left">comment</i><span>自己紹介</span>
+      </span>
+      <div class="card-panel purple lighten-4">
+        <span class="black-text" style="font-size: 18px;word-wrap: break-word">
+          {{data.comment}}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

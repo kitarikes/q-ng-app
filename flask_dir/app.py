@@ -199,7 +199,15 @@ def profile_edit(u_id):
   else:
     return redirect('/sign_in')
 
-
+@app.route('/mypage/r/<u_id>', methods=['GET'])
+def r_mypage(u_id):
+  user_info = db.session.query(User).get(int(u_id))
+  user_info = user_info.__dict__
+  del user_info['_sa_instance_state']
+  del user_info['password']
+  osi_li = db.session.query(Osi).filter(Osi.user_id == int(u_id)).all()
+  osi_li = [osi.__dict__ for osi in osi_li]
+  return render_template('mypage/r-mypage.html', data=user_info, osi=osi_li, s=session, g_dic=group_dict,u_dic=user_dict, s_dic=sex_dict, notify=get_new_messages())
 
 # Message機能
 @app.route('/messages/mkroom/<u_id>', methods=['GET'])

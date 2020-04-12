@@ -43,7 +43,7 @@ div[class='com1'] img{
   /*color: #E7DED7;*/
   color: yellowgreen;
 
-  border-bottom: 2.5px solid #160691;
+  border-bottom: 2.5px solid #CC5A56;
   transform: rotate(-0.38deg);
 
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -116,7 +116,7 @@ height: 78px;
 left: 12px;
 top: 12px;
 
-font-family: Rochester;
+font-family: 'Rochester', cursive;
 font-style: normal;
 font-weight: normal;
 font-size: 16px;
@@ -154,7 +154,7 @@ height: 86.4px;
 left: -16px;
 /* Body H4 */
 
-font-family: Montserrat;
+font-family:  'Montserrat', sans-serif;
 font-style: normal;
 font-weight: bold;
 font-size: 24px;
@@ -175,7 +175,7 @@ left:-18px;
 
 /* Body P */
 
-font-family: Montserrat;
+font-family:  'Montserrat', sans-serif;
 font-style: normal;
 font-weight: normal;
 font-size: 18px;
@@ -215,7 +215,7 @@ top: 250px;
   
   /* Body H4 */
   
-  font-family: Montserrat;
+  font-family:  'Montserrat', sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 24px;
@@ -236,7 +236,7 @@ top: 250px;
   
   /* Body P */
   
-  font-family: Montserrat;
+  font-family:  'Montserrat', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
@@ -307,7 +307,7 @@ height: 148px;
 left: 128px;
 top: 84px;
 
-font-family: Montserrat;
+font-family:  'Montserrat', sans-serif;
 font-style: normal;
 font-weight: normal;
 font-size: 20px;
@@ -326,7 +326,7 @@ height: 86.4px;
 
 /* Body H4 */
 
-font-family: Montserrat;
+font-family:  'Montserrat', sans-serif;
 font-style: normal;
 font-weight: bold;
 font-size: 24px;

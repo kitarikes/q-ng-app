@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 {% block style%}
+<link rel="stylesheet" href="{{url_for('static', filename = 'css/home.css')}}?{{a}}">
+<!--
 <style>
 @import url(https://fonts.googleapis.com/css?family=Lato:300);
 body{
@@ -28,10 +30,75 @@ body{
   -ms-text-fill-color: transparent;  
 }
 </style>
+-->
 {% endblock%}
 {% block content %}
+<!--
 <link href='https://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
 <div class="container">
   そこの君、<br>◢ オタクは隠すコトじゃない ◢ <br><span style="font-size: 24px;">#九大坂道愛好会</span>
 </div>
-{% endblock %}
+-->
+
+<div class='mobileconvert1'>
+  <div class="com1">
+    <img src="{{url_for('static', filename = 'images/bg.jpg')}}" width="100%" alt="">
+    <span id='title'>九大坂道同好会</span>
+    <div class='com2'>
+      <span id='sub1'>九大発の坂道サークル</span>
+      <span id='sub2'>入部する</span>
+    </div>
+  </div>
+  <div class="com3">
+    <span id='sub3'>🎉 九大に待望の坂道サークルが誕生！！ 新入生も在校生も坂道オタクは集合！！ 部員でライブ、握手会、カラオケ等々 もう現場に１人でいかなくていい！！！</span>
+    <div class="com4">
+      <div>
+      </div>
+      <div>
+        <img id='m-bg' src="{{url_for('static', filename = 'images/n.jpg')}}">
+      </div>
+      <div class="com5">
+        <span id='title2'>活動内容</span><br>
+        <span id='content1'>
+          <p>① グッズトレやライブの連番相手を探すための専用チャンネルをslackにて用意しています。</p>
+          <p>② サークル内のメンバーを学年や推しメンごとに探せる検索機能を用意しています。そこでは簡単なメッセージも送ることができるので、新入生の方も気軽に友人を作ることができます。</p>
+          <p> ③ ウイルスの影響により、現在の時点ではオフラインで集まる予定はありません。</p>
+        </span>
+      </div>
+      <div>
+        <img id='k-bg' src="{{url_for('static', filename = 'images/k.jpg')}}" width='100%' alt="">
+      </div>
+      <div class='com6'>
+        <span id='title3'>LINK</span>
+        <span id='content4'>
+          <p>公式Twitter: <a href="https://twitter.com/q_u_46">@q_u_46</a></p>
+          <p>旧Twitter: <a href="@Kyudai_Nogizaka">@Kyudai_Nogizaka</a></p>
+          <a class="twitter-timeline" data-width="310" data-height="340" data-theme="dark"
+            href="https://twitter.com/q_u_46?ref_src=twsrc%5Etfw">Tweets by q_u_46</a>
+          <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </span>
+      </div>
+      <div class="com7">
+        <span id='title4'>入部お待ちしております！</span>
+      </div>
+
+      <div>
+        <img id='bg-h' src="{{url_for('static', filename = 'images/h.jpg')}}" width='200' alt="">
+      </div>
+
+      <div class="com8">
+        <span id='title5'>代表</span>
+        <img id='profile-bg' src="{{url_for('static', filename = 'images/profile.jpg')}}">
+        <span id='block'>
+          <h5>青木一翔</h5>
+          <p id='content5'>
+            理学部二年の青木です。<br>びよよよよーーーん！！
+          </p>
+        </span>
+      </div>
+
+      <p id='boder'></p>
+      <p id='footer'>九大坂道同好会</p>
+
+    </div>
+    {% endblock %}

@@ -26,9 +26,11 @@ group_dict = {1: '乃木坂46', 2: '欅坂46', 3: '日向坂46'}
 user_dict = {'username':'ユーザー名','nickname':'名前', 'grade':'学年', 'osi_group':'推しグループ','comment':'自己紹介', 'department':'学部', 'sex':'性別', 'adr':'居住地', 'twitter_id': 'twitter'}
 sex_dict = {1: '男', 2:'女'}
 
+import random
 @app.route('/')
 def home():
-  return render_template('home.html', s=session)
+  a = random.randint(0, 10000)
+  return render_template('home.html', s=session, a=a)
 
 # 認証機能
 @app.route('/sign_up', methods=['GET', 'POST'])

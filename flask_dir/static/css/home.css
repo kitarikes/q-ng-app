@@ -16,7 +16,7 @@ div[class='com1'] img{
   width:394px;
   left:-2px;
   object-position: 50% 50%;
-  opacity: 80%;
+  opacity: 65%;
   margin-left: auto;
   margin-right: auto;
 
@@ -29,7 +29,7 @@ div[class='com1'] img{
   left: calc(50% - 168px/2);
   top: 85px;
 
-  font-family: Roboto;
+  font-family: 'Roboto', sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 24px;
@@ -37,10 +37,13 @@ div[class='com1'] img{
   display: flex;
   align-items: center;
   text-align: center;
+  text-stroke: 1px #000;
+  -webkit-text-stroke: 1px #000;
 
-  color: #000000;
+  /*color: #E7DED7;*/
+  color: yellowgreen;
 
-  border-bottom: 4px solid #47CAD2;
+  border-bottom: 2.5px solid #160691;
   transform: rotate(-0.38deg);
 
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -63,7 +66,7 @@ div[class='com1'] img{
   left: calc(50% - 160px/2);
   top: 12px;
 
-  font-family: Roboto;
+  font-family: 'Roboto', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
@@ -82,7 +85,7 @@ height: 38px;
 left: 42px;
 top: 34px;
 
-font-family: Roboto;
+font-family: 'Roboto', sans-serif;
 font-style: normal;
 font-weight: normal;
 font-size: 32px;
@@ -262,7 +265,7 @@ top: 250px;
   left: 32px;
   top: 23px;
   
-  font-family: Roboto;
+  font-family: 'Roboto', sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 22px;
@@ -361,7 +364,7 @@ left: 112px;
 top: 734px;
 margin-bottom: 16px;
 
-font-family: Roboto;
+font-family: 'Roboto', sans-serif;
 font-style: normal;
 font-weight: normal;
 font-size: 12px;

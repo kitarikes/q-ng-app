@@ -379,6 +379,9 @@ def search():
             searched_users.append(db.session.query(User).get(int(id_)))
         data = []
         for u in searched_users:
+          if u.id == session['user_id']:
+            #print(u.id)
+            continue
           u = u.__dict__
           osi1 = db.session.query(Osi).filter(Osi.user_id==int(u['id']), Osi.osi_grade==1).first()
           if osi1 != None:

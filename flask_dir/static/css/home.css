@@ -86,7 +86,7 @@ div[class='com1'] img{
 width: 128px;
 height: 38px;
 left: 42px;
-top: 34px;
+top: -8px;
 
 font-family: 'Roboto', sans-serif;
 font-style: normal;
@@ -106,7 +106,7 @@ color: #CDC8D4;
   position: relative;
 width: 317px;
 height: 108px;
-top: 4px;
+top: -36px;
 margin: auto;
 background: #500C98;
 border-radius: 20px;
@@ -364,7 +364,7 @@ border: 1px solid rgba(0, 0, 0, 0.3);
 width: 168px;
 height: 23px;
 left: 112px;
-top: 734px;
+top: 712px;
 margin-bottom: 16px;
 
 font-family: 'Roboto', sans-serif;

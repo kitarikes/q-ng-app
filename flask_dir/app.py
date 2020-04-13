@@ -32,6 +32,10 @@ def home():
   a = random.randint(0, 10000)
   return render_template('home.html', s=session, a=a)
 
+@app.route('/usage')
+def usage():
+  return render_template('usage.html')
+
 # 認証機能
 @app.route('/sign_up', methods=['GET', 'POST'])
 def sing_up():

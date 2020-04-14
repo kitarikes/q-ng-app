@@ -331,6 +331,8 @@ def message_li():
             o_name = db.session.query(User).get(o_id).nickname
 
             d = sorted([[m.message, m.created_at] for m in room.messages], key=lambda x: x[1], reverse=True)
+            if not d:
+              continue
             #print(d)
             d[0][1] = d[0][1].strftime("%Y/%m/%d %H:%M")
 

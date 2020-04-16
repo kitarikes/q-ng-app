@@ -111,9 +111,15 @@
       <li class="collection-item col l6 s12">
         <div class="input-field">
           <i class="material-icons prefix">grade</i>
+          {% if data.grade == 5 or data.grade == 6 %}
+          <input readonly="readonly" id="icon_prefix" type="text" class="validate" value=修士{{data.grade - 4}}年>
+          <label for="icon_prefix">学年</label>
+          <a class="modal-trigger" href="#modal2"><i class="material-icons prefix pro-edit">edit</i></a>
+          {% else %}
           <input readonly="readonly" id="icon_prefix" type="text" class="validate" value=学部{{data.grade}}年>
           <label for="icon_prefix">学年</label>
           <a class="modal-trigger" href="#modal2"><i class="material-icons prefix pro-edit">edit</i></a>
+          {%endif%}
         </div>
         <!--modal-->
         <div id="modal2" class="modal">
@@ -127,6 +133,8 @@
                   <option value="2">学部２年</option>
                   <option value="3">学部３年</option>
                   <option value="4">学部４年</option>
+                  <option value="5">修士１年</option>
+                  <option value="6">修士２年</option>
                   <option value="0">その他</option>
                 </select>
                 <label>学年</label>

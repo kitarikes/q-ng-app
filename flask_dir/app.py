@@ -27,10 +27,15 @@ user_dict = {'username':'ユーザー名','nickname':'名前', 'grade':'学年',
 sex_dict = {1: '男', 2:'女'}
 
 import random
-@app.route('/')
+@app.route('/Top')
 def home():
   a = random.randint(0, 10000)
   return render_template('home.html', s=session, a=a)
+
+@app.route('/')
+def index():
+  return redirect('/Top')
+
 
 @app.route('/usage')
 def usage():

@@ -30,7 +30,7 @@ import random
 @app.route('/Top')
 def home():
   a = random.randint(0, 10000)
-  return render_template('home.html', s=session, a=a)
+  return render_template('new-home.html', s=session, a=a)
 
 @app.route('/')
 def index():

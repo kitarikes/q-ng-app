@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block style%}
+<title>九大坂道同好会公式HP｜九大発の坂道アイドルサークル！ </title>
+<meta name="description"
+  content="九大に待望の坂道アイドルサークルが誕生！！新入生も在校生も坂道オタクは集合！！ 部員でライブ、握手会、カラオケ等々、もう現場に１人でいかなくていい！！！ # 乃木坂46｜# 欅坂46｜# 日向坂46">
+
+<link rel="stylesheet" href="{{url_for('static', filename = 'css/new-home.css')}}?{{a}}">
+
+{% endblock%}
+{% block content %}
+<div class='main-img'></div>
+<div class='second-content' style='z-index:-1;'>
+  <img
+    src="https://res.cloudinary.com/dcnwj1ge9/image/upload/v1587998537/q-u46/home-img/%E4%B9%83%E6%9C%A8%E5%86%99%E7%9C%9F_xsv0yu.png"
+    style="margin-left: 90px;margin-top:30px;">
+  <div style='margin-top: -30px;'><img
+      src="https://res.cloudinary.com/dcnwj1ge9/image/upload/v1587998542/q-u46/home-img/%E4%B8%89%E8%A7%92%E5%BD%A2%E6%B0%B4%E8%89%B2_xai5b1.svg"
+      alt="sankaku" width=350>
+  </div>
+
+</div>
+
+
+
+{% endblock %}

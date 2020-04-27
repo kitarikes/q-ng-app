@@ -1,14 +1,15 @@
-## LINK
+## 🔗LINK
 
 サークル公式HP：[https://q-u46.site](https://q-u46.site)
+
 公式twitter：[https://twitter.com/q_u_46](https://twitter.com/q_u_46)
 
-## 使い方
+## 📌使い方
 
 [こちら](https://q-u46.site/usage)を参考にして下さい。
 
 
-## 参考
+## 📝参考
 - [Python3 の 定番ORM 「 SQLAlchemy 」で MySQL ・ SQLite 等を操作 – 導入からサンプルコード](https://it-engineer-lab.com/archives/1183)
 - [Flask+Service Worker on Heroku で PWA チュートリアル](https://kenzo0107.hatenablog.com/entry/2018/08/14/131148)
 - [flaskのssl化について](https://stackoverflow.com/questions/32237379/python-flask-redirect-to-https-from-http/50041843)

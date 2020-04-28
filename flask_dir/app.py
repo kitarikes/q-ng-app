@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, session, redirect
 from flask_sqlalchemy import SQLAlchemy
+from flask_mobility import Mobility
+from flask_mobility.decorators import mobile_template
 from sqlalchemy import or_
 import bcrypt
 import os
@@ -22,15 +24,17 @@ app = create_app()
 app.secret_key = os.environ.get("SECRET_KEY") or 'aaa'
 db = SQLAlchemy(app)
 
+
 group_dict = {1: '乃木坂46', 2: '欅坂46', 3: '日向坂46'}
 user_dict = {'username':'ユーザー名','nickname':'名前', 'grade':'学年', 'osi_group':'推しグループ','comment':'自己紹介', 'department':'学部', 'sex':'性別', 'adr':'居住地', 'twitter_id': 'twitter'}
 sex_dict = {1: '男', 2:'女'}
 
 import random
 @app.route('/Top')
-def home():
-  a = random.randint(0, 10000)
-  return render_template('new-home.html', s=session, a=a)
+@mobile_template('{mobile/}home.html')
+def home(template):
+  a = random.randint(0, 10000)  
+  return render_template(template, s=session, a=a)
 
 @app.route('/')
 def index():

@@ -1,3 +1,4 @@
+
 @media screen and (min-width: 400px) {
   .main-img {
     margin-top: -40px;
@@ -6,9 +7,18 @@
     left: -26px;
     width: width;
     height: 541px;
-    z-index: -1;
-    background: transparent url('https://res.cloudinary.com/dcnwj1ge9/image/upload/v1587998535/q-u46/home-img/%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB_nfddmn.png') 0% 0%   no-repeat padding-box;
+    background: transparent url('https://res.cloudinary.com/dcnwj1ge9/image/upload/v1587998535/q-u46/home-img/%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB_nfddmn.png') 0% 0%   padding-box;
     opacity: 1;
+  }
+
+  .second-content {
+    height: 1877px;
+    margin-top: 0px;
+    margin-left: -60px;
+    background: url('https://res.cloudinary.com/dcnwj1ge9/image/upload/v1588070867/q-u46/home-img/%E3%82%B3%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%8D%E3%83%B3%E3%83%88_1_1_crd9gd.svg') 0% 0%  padding-box;
+    opacity: 1;
+    z-index: -1;
+    
   }
 }
 
@@ -20,9 +30,18 @@
     left: -26px;
     width: width;
     height: 541px;
-    z-index: -1;
     background: transparent url('https://res.cloudinary.com/dcnwj1ge9/image/upload/v1587998535/q-u46/home-img/%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB_nfddmn.png') 0% 0%   no-repeat padding-box;
     opacity: 1;
+  }
+
+  .second-content {
+    height: 1877px;
+    margin-top: -10px;
+    margin-left: -80px;
+    background: url('https://res.cloudinary.com/dcnwj1ge9/image/upload/v1588070867/q-u46/home-img/%E3%82%B3%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%8D%E3%83%B3%E3%83%88_1_1_crd9gd.svg') 0% 0% no-repeat padding-box;
+    opacity: 1;
+    z-index: -1;
+    
   }
 }
 
@@ -33,33 +52,103 @@
     top: 0px; 
     width: 414px;
     height: 541px;
-    z-index: -1;
-    background: transparent url('https://res.cloudinary.com/dcnwj1ge9/image/upload/v1587998535/q-u46/home-img/%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB_nfddmn.png') 0% 0%   no-repeat padding-box;
+    background: transparent url('https://res.cloudinary.com/dcnwj1ge9/image/upload/v1587998535/q-u46/home-img/%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB_nfddmn.png') 0% 0%    padding-box;
     opacity: 1;
+  }
+
+  .second-content {
+    height: 1877px;
+    margin-top: -10px;
+    margin-left: -80px;
+    background: url('https://res.cloudinary.com/dcnwj1ge9/image/upload/v1588070867/q-u46/home-img/%E3%82%B3%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%8D%E3%83%B3%E3%83%88_1_1_crd9gd.svg') 0% 0% padding-box;
+    opacity: 1;
+    z-index: -1;
+    
   }
 }
 
-.second-content {
-  margin:auto;
-  margin-top: -10px;
-  margin-left: -80px;
-  top: 400px;
-  left: -88.26435089111328px;
-  width: width;
-  height: 1877px;
-  background: url('https://res.cloudinary.com/dcnwj1ge9/image/upload/v1587998545/q-u46/home-img/%E5%B8%AF%E7%B7%9A_cjkfyg.svg') 0% 0% no-repeat padding-box;
-  opacity: 1;
-  z-index: -2;
+.edge1 {
+  margin-top:50px;
+  margin-left: 104px;
+  width: 70%;
+}
+
+.keyaki {
+  margin-top: 36px;
+  margin-left: 128px;
+  height: 267px;
+  background: url('https://res.cloudinary.com/dcnwj1ge9/image/upload/v1587998536/q-u46/home-img/%E6%AC%85%E5%86%99%E7%9C%9F_gfwedj.png')0% 0% no-repeat padding-box;
+
+}
+.form-button {
+  margin-top: -72px;
+  margin-left: 148px;
+  padding-left: 32px;
+  width: 222px;
+  height: 50px;
+  background-color: #FF7777;
+  border-radius: 25px;
+  border: 1px solid #707070;
+}
+
+#first-line {
+  color: black;
+  font-size: 12px;
+  text-align: center;
+}
+
+#second-line {
+  color: #212121;
+  font-size:18px;
+  font-weight: bold;
   
 }
 
-.sankaku-img {
-  margin-top: 50px;
-  width: 272px;
-  height: 248px;
-  opacity: 0.62;
-
+.com6 {
+  margin-top:58px;
+  padding: 10%;
+  padding-top: 10px;
+  background-color:#D0FBFF;
 }
 
+#title3 {
+  font-family: 'Roboto', sans-serif;
+}
 
+.hinata {
+  margin-top:42px;
+  margin-left: 90px;
+  padding-top: 200px;
+  padding-left:16px;
+  height: 223px;
+  background: url('https://res.cloudinary.com/dcnwj1ge9/image/upload/v1587998535/q-u46/home-img/%E6%97%A5%E5%90%91%E5%9D%82%E5%86%99%E7%9C%9F_mglyso.png')0% 0% no-repeat padding-box;
+}
 
+.footer-compo {
+  margin-top:32px;
+  margin-left:192px;
+}
+
+#boder{
+  width: 299.5px;
+  height: 0px;
+  margin-left:112px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+#footer{
+  width: 168px;
+  height: 23px;
+  margin-bottom: 16px;
+  margin-left: 222px;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  
+  color: rgba(0, 0, 0, 0.5);
+}
